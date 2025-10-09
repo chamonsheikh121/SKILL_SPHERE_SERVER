@@ -1,0 +1,20 @@
+export type TUserName = {
+  first_name: string;
+  mid_name?: string;
+  last_name: string;
+};
+
+export type TUser = {
+  name: TUserName;
+  email: string;
+  registration_number?: string;
+  password_hash: string;
+  role: "student" | "admin";
+  profile_image?: string;
+  phone_number?: string;
+  is_email_verified: boolean;
+  status: "in_progress" | "blocked" | "active";
+  isDeleted: boolean;
+  wishlist?: string[];
+  last_login?: string;
+};
