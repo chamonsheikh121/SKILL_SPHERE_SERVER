@@ -1,5 +1,4 @@
 import { ZodTypeAny } from "zod";
-import { TUser } from "../modules/user/user.interface";
 import { NextFunction, Request, Response } from "express";
 import { catch_async } from "../utils/catch_async";
 

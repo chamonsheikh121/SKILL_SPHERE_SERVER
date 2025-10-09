@@ -1,8 +1,8 @@
 // src/models/Student.ts
 import mongoose, { Schema, model, Types, Document } from "mongoose";
-import { TStudent } from "./student.interface";
+import { IStudent, TStudent } from "./student.interface";
 
-const studentSchema = new Schema<TStudent>(
+const studentSchema = new Schema<TStudent, IStudent>(
   {
     user_id: { type: Schema.Types.ObjectId, ref: "Users", required: true },
     registration_number: {
@@ -21,6 +21,11 @@ const studentSchema = new Schema<TStudent>(
   }
 );
 
-const StudentModel = model<TStudent>("Students", studentSchema);
+studentSchema.statics.is_student_exist = async function (user_id) {
+  const student = await this.findOne({ user_id });
+  return student;
+};
+
+const StudentModel = model<TStudent, IStudent>("Students", studentSchema);
 
 export default StudentModel;

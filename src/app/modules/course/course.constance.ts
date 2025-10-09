@@ -1,0 +1,1 @@
+export const course_level_const = ["beginner", "intermediate", "advanced"]

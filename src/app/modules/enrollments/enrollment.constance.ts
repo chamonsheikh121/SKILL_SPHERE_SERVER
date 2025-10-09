@@ -1,0 +1,1 @@
+export const enrolled_user_status_const = ["active", "completed"]
