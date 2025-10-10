@@ -6,6 +6,11 @@ const create_user_into_db = async (payload: TUser) => {
   return result;
 };
 
+const create_admin_into_db = async (payload: TUser) => {
+  const result = await UserModel.create(payload);
+  return result;
+};
+
 export const user_services = {
   create_user_into_db,
 };

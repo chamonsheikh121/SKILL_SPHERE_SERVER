@@ -1,11 +1,10 @@
 // src/models/CourseOffer.ts
 import { Schema, model} from "mongoose";
-import { TOffered_Course } from "./offered_course.interface";
-import { offered_course_enrollment_status_const, offered_course_status_const } from './offered_course.constance';
+import { batch_enrollment_status_const, batch_status_const } from "./batch.constance";
+import { TBatch } from "./batch.interface";
 
 
-
-const courseOfferSchema = new Schema<TOffered_Course>(
+const batch_Schema = new Schema<TBatch>(
   {
     course_id: { type: Schema.Types.ObjectId, ref: "Courses", required: true },
     instructor_admin_id: { type: Schema.Types.ObjectId, ref: "Users", required: true },
@@ -19,12 +18,12 @@ const courseOfferSchema = new Schema<TOffered_Course>(
     discount: { type: Number, default: 0 },
     status: { 
       type: String, 
-      enum:offered_course_status_const, 
+      enum:batch_status_const, 
       default: "upcoming" 
     },
     enrollmentStatus: {
       type: String,
-      enum: offered_course_enrollment_status_const,
+      enum: batch_enrollment_status_const,
       default: "not_started"
     },
     enrolled_students: [{ type: Schema.Types.ObjectId, ref: "Users" }],
@@ -37,6 +36,6 @@ const courseOfferSchema = new Schema<TOffered_Course>(
   }
 );
 
-const Offered_Course_Model = model<TOffered_Course>("Offered_Courses", courseOfferSchema);
+const Batch_Model = model<TBatch>("batches", batch_Schema);
 
-export default Offered_Course_Model;
+export default Batch_Model;

@@ -1,7 +1,7 @@
 import express from "express";
 import { user_router } from "../modules/user/user.router";
 import { course_router } from "../modules/course/course.router";
-import { offered_course_router } from "../modules/offered_course/offered_course.router";
+import { batch_router } from "../modules/batch/batch.router";
 import { enrollment_router } from "../modules/enrollments/enrollment.router";
 
 const router = express.Router();
@@ -16,8 +16,8 @@ const routes = [
     route: course_router,
   },
   {
-    path: "/offeredCourses",
-    route: offered_course_router,
+    path: "/batches",
+    route: batch_router,
   },
   {
     path: "/enrollments",

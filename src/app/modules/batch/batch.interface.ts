@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-export type TOffered_Course = {
+export type TBatch = {
   course_id: Types.ObjectId;            
   instructor_admin_id: Types.ObjectId;        
   title: string;
