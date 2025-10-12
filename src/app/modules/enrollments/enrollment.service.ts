@@ -36,9 +36,6 @@ export const create_enrollment_into_db = async (payload: TEnrollment) => {
       const student_data: TStudent = {
         user_id: payload?.userId,
         registration_number: student_registration_number,
-        certificates: [] as Types.ObjectId[], // cast
-        enrolled_courses: [enrollment?._id] as Types.ObjectId[], // cast
-        // progress:  enrollment?._id ? [enrollment._id] : [], // cast
       };
 
       await StudentModel.create([student_data], { session });
@@ -47,27 +44,21 @@ export const create_enrollment_into_db = async (payload: TEnrollment) => {
     // ✅ CASE 2: Both user and student exist
     else {
       // 1️⃣ Create enrollment
+      console.log('student ace');
       const enrollment_result = await Enrollment_Model.create([payload], {
         session,
       });
       enrollment = enrollment_result[0];
-
-      // 2️⃣ Push new enrollment id into student's enrolled_courses
-      await StudentModel.findByIdAndUpdate(
-        student._id,
-        { $addToSet: { enrolled_courses: enrollment?._id } }, // avoid duplicates
-        { new: true, session }
-      );
     }
 
     // ✅ Commit the transaction
     await session.commitTransaction();
-    session.endSession();
+    await session.endSession();
 
     return enrollment;
   } catch (error) {
     await session.abortTransaction();
-    session.endSession();
+    await session.endSession();
     throw new Error(error.message);
   }
 };

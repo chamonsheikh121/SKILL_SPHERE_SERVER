@@ -2,7 +2,8 @@
 import mongoose, { Schema, model } from "mongoose";
 import { IUser, TUser } from "./user.interface";
 import { userRoleConstance, userStatusConstance } from "./user.constance";
-import { error } from "console";
+import bcrypt from "bcrypt";
+import config from "../../config";
 
 const userSchema = new Schema<TUser, IUser>(
   {
@@ -13,17 +14,17 @@ const userSchema = new Schema<TUser, IUser>(
     },
     registration_number: {
       type: String,
+      default: "",
     },
     email: { type: String, required: true, unique: true },
-    password_hash: { type: String, required: true },
+    password: { type: String, required: true },
     role: { type: String, enum: userRoleConstance, default: "user" },
     profile_image: { type: String },
-    phone_number: { type: String },
+    phone_number: { type: String, required: true },
     is_email_verified: { type: Boolean, default: false },
     status: { type: String, enum: userStatusConstance, default: "in_progress" },
     isDeleted: { type: Boolean, default: false },
-    wishlist: [{ type: String }],
-    last_login: { type: String },
+    wishlist: [{ type: String, default: "" }],
   },
   {
     timestamps: true,
@@ -31,13 +32,17 @@ const userSchema = new Schema<TUser, IUser>(
 );
 
 userSchema.statics.is_user_exist_by_email = async function (id) {
-  const user = await this.findById(id)
-
+  const user = await this.findById(id);
   if (!user) {
     throw new Error("user doesn't exist");
   }
   return user;
 };
+
+userSchema.pre("save", async function () {
+  this.password = await bcrypt.hash(this.password, Number(config.BCRYPT_SALT_ROUND));
+  console.log(this.password);
+});
 
 const UserModel = model<TUser, IUser>("Users", userSchema);
 

@@ -12,6 +12,6 @@ const CertificateSchema = new Schema<TCertificate>(
   { timestamps: true }
 );
 
-const Certificate_Model =model<TCertificate>("Certificate", CertificateSchema);
+const Certificate_Model =model<TCertificate>("Certificates", CertificateSchema);
 
 export default Certificate_Model;

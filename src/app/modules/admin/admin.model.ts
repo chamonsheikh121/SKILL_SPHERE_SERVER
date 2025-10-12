@@ -10,11 +10,14 @@ const adminSchema = new Schema<TAdmin>(
       required: true,
       unique: true, // one admin per user
     },
-    permissions: {
-      type: [String],
-      default: [],
-      enum: admin_roles,
-    }
+    registration_number: {
+      type: String,
+    },
+    // permissions: {
+    //   type: [String],
+    //   default: [],
+    //   enum: admin_roles,
+    // }
   },
   {
     timestamps: true,

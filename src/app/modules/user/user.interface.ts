@@ -10,15 +10,14 @@ export type TUser = {
   name: TUserName;
   email: string;
   registration_number?: string;
-  password_hash: string;
+  password: string;
   role: "student" | "admin" | "user";
   profile_image?: string;
-  phone_number?: string;
+  phone_number: string;
   is_email_verified: boolean;
   status: "in_progress" | "blocked" | "active";
   isDeleted: boolean;
   wishlist?: string[];
-  last_login?: string;
 };
 
 export interface IUser extends Model<TUser> {

@@ -9,16 +9,24 @@ const userNameSchema = z.object({
 export const user_zod_validation_schema = z.object({
   body: z.object({
     name: userNameSchema,
-    registration_number: z.string().optional(),
     email: z.string().email("Invalid email address"),
-    password_hash: z.string().min(6, "Password must be at least 6 characters"),
-    role: z.enum(userRoleConstance).default("user"),
-    profile_image: z.string().optional(),
+    password:z.string(),
     phone_number: z.string().optional(),
-    is_email_verified: z.boolean().optional().default(false),
-    status: z.enum(userStatusConstance).default("in_progress"),
-    isDeleted: z.boolean().optional().default(false),
-    wishlist: z.array(z.string()).optional(),
-    last_login: z.string().optional(),
+  }),
+});
+
+
+const update_userNameSchema = z.object({
+  first_name: z.string().min(1, "First name is required").optional(),
+  mid_name: z.string().optional().optional(),
+  last_name: z.string().min(1, "Last name is required").optional(),
+});
+
+
+
+export const update_user_zod_validation_schema = z.object({
+  body: z.object({
+    name: update_userNameSchema,
+    phone_number: z.string().optional(),
   }),
 });

@@ -8,6 +8,7 @@ import { review_router } from "../modules/review/review.router";
 import { blog_router } from "../modules/blog/blog.router";
 import { certificate_router } from "../modules/certificate/certificate.router";
 import { payment_router } from "../modules/payment/payment.router";
+import { admin_router } from "../modules/admin/admin.router";
 
 const router = express.Router();
 
@@ -15,6 +16,10 @@ const routes = [
   {
     path: "/users",
     route: user_router,
+  },
+  {
+    path: "/admins",
+    route: admin_router,
   },
   {
     path: "/courses",
