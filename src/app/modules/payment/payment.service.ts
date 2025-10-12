@@ -4,25 +4,35 @@ import UserModel from "../user/user.model";
 import { TPayment } from "./payment.interface";
 import SSLCommerzPayment from "sslcommerz-lts";
 import { v4 as uuidv4 } from "uuid";
+import Payment_model from "./payment.model";
 
-const create_payment_into_db = async (payload: TPayment) => {
-  const store_id = config.SSLCOMMERZ_STORE_ID;
-  const store_passwd = config.SSLCOMMERZ_PASSWORD;
+const initialize_sslcommerz_into_db = async (payload: TPayment) => {
   const is_live = false; //true for live, false for sandbox
+  const transactionId = uuidv4();
 
   const course = await CourseModel.findById(payload?.courseId);
   const user = await UserModel.findById(payload?.userId);
 
-  const transactionId = uuidv4();
+  let payment_data: Partial<TPayment> = {};
+
+  if (user && course) {
+    payment_data.courseId = course?._id;
+    payment_data.paymentMethod = payload?.paymentMethod;
+    payment_data.transactionId = transactionId;
+    payment_data.userId = user?._id;
+  }
+
+  await Payment_model.create(payment_data);
+
   const customer_name = `${user?.name?.first_name} ${user?.name?.mid_name} ${user?.name?.last_name}`;
 
   const data = {
     total_amount: course?.price,
     currency: "BDT",
     tran_id: transactionId, // use unique tran_id for each api call
-    success_url: "http://localhost:3030/success",
-    fail_url: "http://localhost:3030/fail",
-    cancel_url: "http://localhost:3030/cancel",
+    success_url: `http://localhost:5000/api/v1/payments/ssl_payment/success/${transactionId}`,
+    fail_url: `http://localhost:5000/api/v1/payments/ssl_payment/fail/${transactionId}`,
+    cancel_url: `http://localhost:5000/api/v1/payments/ssl_payment/cancel/${transactionId}`,
     ipn_url: "http://localhost:3030/ipn",
     shipping_method: "Courier",
     product_name: course?.title,
@@ -47,12 +57,79 @@ const create_payment_into_db = async (payload: TPayment) => {
     ship_country: "Bangladesh",
   };
 
-  console.log(data);
+  const sslcz = new SSLCommerzPayment(
+    config.SSLCOMMERZ_STORE_ID,
+    config.SSLCOMMERZ_PASSWORD,
+    is_live
+  );
+  const api_response = await sslcz.init(data);
 
-  //   const result = await Payment_model.create(payload);
-  //   return result;
+  return {
+    gatewway_page_url: api_response.GatewayPageURL,
+  };
+};
+
+const success_sslcommerz_into_db = async (tran_id: string | undefined) => {
+  const result = await Payment_model.findOneAndUpdate(
+    { transactionId: tran_id },
+    {
+      paymentStatus: "success",
+    }
+  );
+
+  const successful_payment_data = await Payment_model.findOne(
+    {
+      transactionId: tran_id,
+    },
+    { new: true }
+  );
+
+  if (successful_payment_data) {
+    return successful_payment_data;
+  }
+};
+const fail_sslcommerz_into_db = async (tran_id: string | undefined) => {
+  const result = await Payment_model.findOneAndUpdate(
+    { transactionId: tran_id },
+    {
+      paymentStatus: "failed",
+    }
+  );
+
+  const failed_payment_data = await Payment_model.findOne(
+    {
+      transactionId: tran_id,
+    },
+    { new: true }
+  );
+
+  if (failed_payment_data) {
+    return failed_payment_data;
+  }
+};
+const cancel_sslcommerz_into_db = async (tran_id: string | undefined) => {
+  const result = await Payment_model.findOneAndUpdate(
+    { transactionId: tran_id },
+    {
+      paymentStatus: "canceled",
+    }
+  );
+
+  const failed_payment_data = await Payment_model.findOne(
+    {
+      transactionId: tran_id,
+    },
+    { new: true }
+  );
+
+  if (failed_payment_data) {
+    return failed_payment_data;
+  }
 };
 
 export const payment_services = {
-  create_payment_into_db,
+  initialize_sslcommerz_into_db,
+  success_sslcommerz_into_db,
+  fail_sslcommerz_into_db,
+  cancel_sslcommerz_into_db
 };
