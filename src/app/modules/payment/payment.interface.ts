@@ -2,14 +2,13 @@
 import { Types } from "mongoose";
 
 export type TPaymentStatus = "success" | "failed" | "pending";
+export type TPaymentMethods = "ssl_commerz" | "stripe" | "surjopay";
 
 export type TPayment = {
   courseId: Types.ObjectId;
-  amount: number;
   paymentStatus: TPaymentStatus;
   userId: Types.ObjectId;
   transactionId: string;
-  paymentMethod: string;
-  is_published: boolean;
+  paymentMethod: TPaymentMethods;
   is_deleted: boolean;
 };

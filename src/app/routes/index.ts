@@ -7,6 +7,7 @@ import { video_router } from "../modules/video/video.router";
 import { review_router } from "../modules/review/review.router";
 import { blog_router } from "../modules/blog/blog.router";
 import { certificate_router } from "../modules/certificate/certificate.router";
+import { payment_router } from "../modules/payment/payment.router";
 
 const router = express.Router();
 
@@ -42,6 +43,10 @@ const routes = [
   {
     path: "/certificates",
     route: certificate_router,
+  },
+  {
+    path: "/payments",
+    route: payment_router,
   },
 ];
 
