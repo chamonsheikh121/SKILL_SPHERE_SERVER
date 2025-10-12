@@ -4,6 +4,9 @@ import { course_router } from "../modules/course/course.router";
 import { batch_router } from "../modules/batch/batch.router";
 import { enrollment_router } from "../modules/enrollments/enrollment.router";
 import { video_router } from "../modules/video/video.router";
+import { review_router } from "../modules/review/review.router";
+import { blog_router } from "../modules/blog/blog.router";
+import { certificate_router } from "../modules/certificate/certificate.router";
 
 const router = express.Router();
 
@@ -27,6 +30,18 @@ const routes = [
   {
     path: "/videos",
     route: video_router,
+  },
+  {
+    path: "/reviews",
+    route: review_router,
+  },
+  {
+    path: "/blogs",
+    route: blog_router,
+  },
+  {
+    path: "/certificates",
+    route: certificate_router,
   },
 ];
 

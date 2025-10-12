@@ -13,7 +13,7 @@ export const user_zod_validation_schema = z.object({
     email: z.string().email("Invalid email address"),
     password_hash: z.string().min(6, "Password must be at least 6 characters"),
     role: z.enum(userRoleConstance).default("user"),
-    profile_image: z.string().url().optional(),
+    profile_image: z.string().optional(),
     phone_number: z.string().optional(),
     is_email_verified: z.boolean().optional().default(false),
     status: z.enum(userStatusConstance).default("in_progress"),

@@ -1,0 +1,1 @@
+export const payment_status_const = ["success", "failed", "pending"]

@@ -11,8 +11,7 @@ export const course_zod_validation_schema = z.object({
       .min(10, "Description must be at least 10 characters long"),
 
     thumbnail: z
-      .string()
-      .url("Thumbnail must be a valid URL"),
+      .string().optional(),
 
     category: z
       .string()
