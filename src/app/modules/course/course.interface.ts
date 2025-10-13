@@ -9,9 +9,9 @@ export type TCourse = {
   price: number;
   discountPrice?: number;
   instructor_or_admin_Id: Types.ObjectId; 
-  videos?: Types.ObjectId[]; 
-  lessons?: Types.ObjectId[]; 
-  reviews?: Types.ObjectId[];
-  totalDuration?: number; 
   tags?: string[];
+  // videos?: Types.ObjectId[]; 
+  // lessons?: Types.ObjectId[]; 
+  // reviews?: Types.ObjectId[];
+  // totalDuration?: number; 
 };

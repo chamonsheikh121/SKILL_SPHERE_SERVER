@@ -10,4 +10,10 @@ router.post(
   enrollment_controllers.create_enrollment
 );
 
+// rout.patch('/complete', )
+
+router.get('/', enrollment_controllers.get_all_enrollment);
+router.get('/:enrollment_id', enrollment_controllers.get_single_enrollment);
+
+
 export const enrollment_router = router;

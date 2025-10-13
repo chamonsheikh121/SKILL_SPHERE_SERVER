@@ -37,6 +37,25 @@ return result;
 
 }
 
+const get_single_admin_from_db = async (id: string) => {
+  const result = await AdminModel.findById(id);
+  if (!result) {
+    throw new Error("No admin found");
+  }
+
+  return result;
+};
+const get_all_admin_from_db = async () => {
+  const result = await AdminModel.find();
+  if (!result.length) {
+    throw new Error("No admins found");
+  }
+
+  return result;
+};
+
 export const admin_services = {
-    create_admin_to_db
+    create_admin_to_db,
+    get_single_admin_from_db,
+    get_all_admin_from_db
 }

@@ -14,8 +14,6 @@ const batch_Schema = new Schema<TBatch>(
     enrollment_start_date: { type: String, required: true },
     enrollment_end_date: { type: String, required: true },
     max_participants: { type: Number, required: true },
-    price: { type: Number, required: true },
-    discount: { type: Number, default: 0 },
     status: { 
       type: String, 
       enum:batch_status_const, 
@@ -26,16 +24,14 @@ const batch_Schema = new Schema<TBatch>(
       enum: batch_enrollment_status_const,
       default: "not_started"
     },
-    enrolled_students: [{ type: Schema.Types.ObjectId, ref: "Users" }],
     language: { type: String, required: true },
     tags: [{ type: String }],
-    created_by: { type: Schema.Types.ObjectId, ref: "Users", required: true },
   },
   {
     timestamps: true,
   }
 );
 
-const Batch_Model = model<TBatch>("batches", batch_Schema);
+const Batch_Model = model<TBatch>("Batches", batch_Schema);
 
 export default Batch_Model;

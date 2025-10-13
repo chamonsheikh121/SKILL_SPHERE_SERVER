@@ -59,12 +59,47 @@ export const create_enrollment_into_db = async (payload: TEnrollment) => {
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
-    throw new Error(error.message);
+    // throw new Error(error.message);
   }
 };
 
+
+// const complete_enrollment_into_db = async(id:string,payload:Partial<TCourse>)=>{
+
+// const course = await CourseModel.findById(id);
+// if(!course){
+//   throw new Error('no course found')
+// }
+//   const result = await CourseModel.findByIdAndUpdate(id,payload, {new:true})
+//   console.log(result);
+// return result;
+// }
+
+const get_single_enrollment_from_db = async (id: string) => {
+  const result = await Enrollment_Model.findById(id);
+  if (!result) {
+    throw new Error("No enrollment found");
+  }
+
+  return result;
+};
+const get_all_enrollment_from_db = async () => {
+  const result = await Enrollment_Model.find();
+  if (!result.length) {
+    throw new Error("No enrollments found");
+  }
+
+  return result;
+};
+
+
+
+
+
 export const enrollment_services = {
   create_enrollment_into_db,
+  get_all_enrollment_from_db,
+  get_single_enrollment_from_db
 };
 //Skill_Sphere
 //LrhTxHJwDZ7BzlUo
