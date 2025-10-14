@@ -13,6 +13,11 @@ const videoSchema = new Schema<TVideo>(
       required: true,
       trim: true,
     },
+     lessonTitle: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     lessonId: {
       type: Schema.Types.ObjectId,
       ref: "Lesson",

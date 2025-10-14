@@ -10,5 +10,6 @@ router.post('/create-course',validate_request(course_zod_validation_schema), cou
 router.patch('/update-course/:course_id',validate_request(update_course_zod_validation_schema), course_controllers.update_course)
 router.get('/:course_id', course_controllers.get_single_course)
 router.get('/', course_controllers.get_all_course)
+router.delete('/delete-course/:course_id', course_controllers.delete_course)
 
 export const course_router = router;

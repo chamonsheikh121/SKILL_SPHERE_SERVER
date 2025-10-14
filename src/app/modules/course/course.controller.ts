@@ -42,10 +42,20 @@ const get_all_course = catch_async(async (req, res, next) => {
     data: result,
   });
 });
+const delete_course = catch_async(async (req, res, next) => {
+  const course_id = req?.params?.course_id
+  const result = await course_services.delete_course_from_db(course_id as string);
+  res.status(200).send({
+    success: true,
+    message: "courses deleted successfully",
+    data: result,
+  });
+});
 
 export const course_controllers = {
   create_course,
   update_course,
   get_single_course,
-  get_all_course
+  get_all_course,
+  delete_course
 };

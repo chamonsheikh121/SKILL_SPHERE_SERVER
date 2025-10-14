@@ -17,7 +17,7 @@ const last_user_id = async (of: string) => {
 
 export const generate_admin_reg_numb = async (): Promise<string> => {
   // Example: S-20250211-0001
-  const last_student_registration_number = await last_user_id("admin");
+  const last_admin_registration_number = await last_user_id("admin");
 
   const now = new Date();
   const current_year = now.getFullYear().toString();
@@ -29,18 +29,18 @@ export const generate_admin_reg_numb = async (): Promise<string> => {
 
   let new_reg_num: string;
 
-  if (last_student_registration_number) {
+  if (last_admin_registration_number) {
     // Extract year part from the previous registration number
-    const last_date_part = last_student_registration_number.split("-")[1]; // e.g. "20250211"
-    const last_serial = parseInt(last_student_registration_number.slice(-4)); // last 4 digits
+    const last_date_part = last_admin_registration_number.split("-")[1]; // e.g. "20250211"
+    const last_serial = parseInt(last_admin_registration_number.slice(-4)); // last 4 digits
 
     if (last_date_part?.startsWith(current_year)) {
       // Same year — increase last 4 digits by 1
       const new_serial = (last_serial + 1).toString().padStart(4, "0");
-      new_reg_num = `S-${current_date_part}${new_serial}`;
+      new_reg_num = `A-${current_date_part}${new_serial}`;
     } else {
       // New year — start again from 0001
-      new_reg_num = `S-${current_date_part}0001`;
+      new_reg_num = `A-${current_date_part}0001`;
     }
   } else {
     // No student yet — start fresh
