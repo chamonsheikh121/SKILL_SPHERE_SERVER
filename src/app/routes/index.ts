@@ -12,6 +12,7 @@ import { admin_router } from "../modules/admin/admin.router";
 import { student_router } from "../modules/student/student.router";
 import { progress_router } from "../modules/progress/progress.router";
 import { lesson_router } from "../modules/lesson/lesson.router";
+import { auth_router } from "../modules/auth/auth.router";
 
 const router = express.Router();
 
@@ -27,6 +28,10 @@ const routes = [
   {
     path: "/students",
     route: student_router,
+  },
+  {
+    path: "/auth",
+    route: auth_router,
   },
   {
     path: "/courses",

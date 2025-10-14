@@ -31,11 +31,8 @@ const userSchema = new Schema<TUser, IUser>(
   }
 );
 
-userSchema.statics.is_user_exist_by_email = async function (id) {
-  const user = await this.findById(id);
-  if (!user) {
-    throw new Error("user doesn't exist");
-  }
+userSchema.statics.is_user_exist_by_email = async function (email) {
+  const user = await this.findOne({email});
   return user;
 };
 

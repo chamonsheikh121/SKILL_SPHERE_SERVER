@@ -4,9 +4,11 @@ import cors from "cors";
 import router from "./app/routes";
 import { global_error_handler } from "./app/errors/global_error_handler";
 import path from "path";
+import cookie_parser from "cookie-parser"
 
 app.use(cors());
 app.use(express.json());
+app.use(cookie_parser())
 app.use("/api/v1", router);
 app.use("/course_videos", express.static(path.join(process.cwd(), "course_videos")));
 

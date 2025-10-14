@@ -15,13 +15,13 @@ export type TUser = {
   profile_image?: string;
   phone_number: string;
   is_email_verified: boolean;
-  status: "in_progress" | "blocked" | "active";
+  status: "in_progress" | "blocked";
   isDeleted: boolean;
   wishlist?: string[];
 };
 
 export interface IUser extends Model<TUser> {
-  is_user_exist_by_email(email: string| Types.ObjectId): Promise<TUser | null>;
+  is_user_exist_by_email(email: string): Promise<TUser | null>;
 }
 
 
