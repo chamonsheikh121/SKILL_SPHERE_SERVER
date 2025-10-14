@@ -6,6 +6,7 @@ import { userInfo } from "os";
 import config from "../../config";
 import { send_reset_password_mail } from "../../utils/send_reset_mail";
 
+
 const login_with_email_and_password = async (payload: TAuth) => {
   const user = await UserModel.is_user_exist_by_email(payload.email);
   if (!user) {

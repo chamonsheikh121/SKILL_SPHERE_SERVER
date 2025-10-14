@@ -9,7 +9,10 @@ import { Progress_Model } from "../progress/progress.model";
 import { TProgress } from "../progress/progress.interface";
 
 export const create_enrollment_into_db = async (payload: TEnrollment) => {
-  await UserModel.is_user_exist_by_email(payload?.userId);
+  const user = await UserModel.findById(payload?.userId)
+  if(!user){
+    throw new Error("No user found. Please create an account first")
+  }
   const student = await StudentModel.is_student_exist(payload?.userId);
   const session = await mongoose.startSession();
 
