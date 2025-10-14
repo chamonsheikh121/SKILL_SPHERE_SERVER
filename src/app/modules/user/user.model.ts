@@ -41,7 +41,7 @@ userSchema.statics.is_user_exist_by_email = async function (id) {
 
 userSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, Number(config.BCRYPT_SALT_ROUND));
-  console.log(this.password);
+
 });
 
 const UserModel = model<TUser, IUser>("Users", userSchema);

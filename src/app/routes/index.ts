@@ -10,6 +10,8 @@ import { certificate_router } from "../modules/certificate/certificate.router";
 import { payment_router } from "../modules/payment/payment.router";
 import { admin_router } from "../modules/admin/admin.router";
 import { student_router } from "../modules/student/student.router";
+import { progress_router } from "../modules/progress/progress.router";
+import { lesson_router } from "../modules/lesson/lesson.router";
 
 const router = express.Router();
 
@@ -57,6 +59,14 @@ const routes = [
   {
     path: "/payments",
     route: payment_router,
+  },
+  {
+    path: "/progress",
+    route: progress_router,
+  },
+  {
+    path: "/lessons",
+    route: lesson_router,
   },
 ];
 

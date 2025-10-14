@@ -5,6 +5,8 @@ import StudentModel from "../student/student.model";
 import { generate_student_reg_numb } from "../user/generate_registration_number";
 import Enrollment_Model from "./enrollment.model";
 import { TStudent } from "../student/student.interface";
+import { Progress_Model } from "../progress/progress.model";
+import { TProgress } from "../progress/progress.interface";
 
 export const create_enrollment_into_db = async (payload: TEnrollment) => {
   await UserModel.is_user_exist_by_email(payload?.userId);
@@ -38,18 +40,28 @@ export const create_enrollment_into_db = async (payload: TEnrollment) => {
         registration_number: student_registration_number,
       };
 
-      await StudentModel.create([student_data], { session });
+      const create_student = await StudentModel.create([student_data], {
+        session,
+      });
     }
 
     // ✅ CASE 2: Both user and student exist
     else {
       // 1️⃣ Create enrollment
-      console.log('student ace');
+      console.log("student ace");
       const enrollment_result = await Enrollment_Model.create([payload], {
         session,
       });
       enrollment = enrollment_result[0];
     }
+
+    const progress_data: Partial<TProgress> = {};
+
+    progress_data.userId = payload?.userId;
+    progress_data.courseId = enrollment?.courseId as Types.ObjectId;
+    progress_data.enrollmentId = enrollment?._id as Types.ObjectId;
+
+    await Progress_Model.create([progress_data], { session });
 
     // ✅ Commit the transaction
     await session.commitTransaction();
@@ -62,7 +74,6 @@ export const create_enrollment_into_db = async (payload: TEnrollment) => {
     // throw new Error(error.message);
   }
 };
-
 
 // const complete_enrollment_into_db = async(id:string,payload:Partial<TCourse>)=>{
 
@@ -92,14 +103,10 @@ const get_all_enrollment_from_db = async () => {
   return result;
 };
 
-
-
-
-
 export const enrollment_services = {
   create_enrollment_into_db,
   get_all_enrollment_from_db,
-  get_single_enrollment_from_db
+  get_single_enrollment_from_db,
 };
 //Skill_Sphere
 //LrhTxHJwDZ7BzlUo
