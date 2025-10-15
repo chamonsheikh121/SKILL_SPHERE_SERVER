@@ -4,7 +4,6 @@ import { z } from "zod";
 export const blog_zod_validation_schema = z.object({
   body: z.object({
     title: z.string().min(1, "Title is required"),
-    thumbnail: z.string().optional(),
     content: z.string().min(1, "Content is required"),
     userId: z.string(),
     tags: z.array(z.string()).optional(),

@@ -10,7 +10,7 @@ export const user_zod_validation_schema = z.object({
   body: z.object({
     name: userNameSchema,
     email: z.string().email("Invalid email address"),
-    password:z.string(),
+    password:z.string().min(6, "Password must be at least 6 characters long"),
     phone_number: z.string().optional(),
   }),
 });

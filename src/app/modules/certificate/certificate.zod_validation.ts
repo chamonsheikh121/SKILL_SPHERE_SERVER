@@ -7,7 +7,6 @@ export const certificate_zod_validation_schema = z.object({
     body:z.object({
   userId: z.string().regex(objectIdRegex, "Invalid userId"),
   courseId: z.string().regex(objectIdRegex, "Invalid courseId"),
-  certificateUrl: z.string().optional(),
 })
 });
 

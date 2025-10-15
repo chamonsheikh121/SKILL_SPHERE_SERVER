@@ -1,20 +1,11 @@
-import config from "../config";
-import nodemailer from "nodemailer";
+import transporter from "./email";
 
-export const send_reset_password_mail = async (resetLink: string, to: string) => {
+
+export const send_reset_password_mail = async (
+  resetLink: string,
+  to: string
+) => {
   try {
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true, // always true for port 465
-      auth: {
-        user: "sheikhchamon9@gmail.com",
-        pass: "qldm spja lueu yakm", // app password
-      },
-    });
-
-    console.log(to, resetLink);
-
     const info = await transporter.sendMail({
       from: '"Skill Sphere" <sheikhchamon9@gmail.com>',
       to,
@@ -53,6 +44,8 @@ Skill Sphere Team`,
     return info;
   } catch (error: any) {
     console.error("Email sending failed:", error.message);
-    throw new Error("Failed to send reset password email. Please try again later.");
+    throw new Error(
+      "Failed to send reset password email. Please try again later."
+    );
   }
 };

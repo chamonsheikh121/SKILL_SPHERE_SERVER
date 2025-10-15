@@ -3,10 +3,16 @@ import { user_services } from "./user.service";
 import { catch_async } from "../../utils/catch_async";
 
 const create_user = catch_async(async (req, res, next) => {
-  const result = await user_services.create_user_into_db(req.body);
+
+  const file = req.file;
+  const file_name = file?.filename
+  const file_full_name = file?.originalname
+
+  const base_url = `${req.protocol}://${req.get("host")}`
+  const result = await user_services.create_user_into_db(req.body, base_url, file_name, file_full_name);
   res.status(200).send({
     success: true,
-    message: "user created successfully",
+    message: "user created successfully. Please verify your email first !!!",
     data: result,
   });
 });

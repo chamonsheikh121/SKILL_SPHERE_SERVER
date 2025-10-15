@@ -7,7 +7,7 @@ const CertificateSchema = new Schema<TCertificate>(
   {
     userId: { type: Schema.Types.ObjectId, ref: "Users", required: true },
     courseId: { type: Schema.Types.ObjectId, ref: "Courses", required: true },
-    certificateUrl: { type: String, required:true},
+    certificateUrl: { type: String},
   },
   { timestamps: true }
 );

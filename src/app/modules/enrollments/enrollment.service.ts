@@ -13,69 +13,7 @@ export const create_enrollment_into_db = async (payload: TEnrollment) => {
   if(!user){
     throw new Error("No user found. Please create an account first")
   }
-  const student = await StudentModel.is_student_exist(payload?.userId);
-  const session = await mongoose.startSession();
 
-  try {
-    session.startTransaction();
-
-    let enrollment;
-    // ✅ CASE 1: User exists but Student doesn't
-    if (!student) {
-      const student_registration_number = await generate_student_reg_numb();
-
-      // 1️⃣ Update user with registration number
-      await UserModel.findByIdAndUpdate(
-        payload?.userId,
-        { registration_number: student_registration_number },
-        { new: true, session }
-      );
-
-      // 2️⃣ Create enrollment
-      const enrollment_result = await Enrollment_Model.create([payload], {
-        session,
-      });
-      enrollment = enrollment_result[0];
-
-      // 3️⃣ Create student with enrollment id
-      const student_data: TStudent = {
-        user_id: payload?.userId,
-        registration_number: student_registration_number,
-      };
-
-      const create_student = await StudentModel.create([student_data], {
-        session,
-      });
-    }
-
-    // ✅ CASE 2: Both user and student exist
-    else {
-      // 1️⃣ Create enrollment
-      console.log("student ace");
-      const enrollment_result = await Enrollment_Model.create([payload], {
-        session,
-      });
-      enrollment = enrollment_result[0];
-    }
-
-    const progress_data: Partial<TProgress> = {};
-
-    progress_data.userId = payload?.userId;
-    progress_data.courseId = enrollment?.courseId as Types.ObjectId;
-    progress_data.enrollmentId = enrollment?._id as Types.ObjectId;
-
-    await Progress_Model.create([progress_data], { session });
-
-    // ✅ Commit the transaction
-    await session.commitTransaction();
-    await session.endSession();
-
-    return enrollment;
-  } catch (error) {
-    await session.abortTransaction();
-    await session.endSession();
-    // throw new Error(error.message);
-  }
 };
 
 // const complete_enrollment_into_db = async(id:string,payload:Partial<TCourse>)=>{

@@ -19,7 +19,7 @@ const userSchema = new Schema<TUser, IUser>(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, enum: userRoleConstance, default: "user" },
-    profile_image: { type: String },
+    profile_image: { type: String},
     phone_number: { type: String, required: true },
     is_email_verified: { type: Boolean, default: false },
     status: { type: String, enum: userStatusConstance, default: "in_progress" },

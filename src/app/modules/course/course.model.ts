@@ -6,7 +6,7 @@ const courseSchema = new Schema<TCourse>(
   {
     title: { type: String, required: true, trim: true },
     description: { type: String, required: true },
-    thumbnail: { type: String, required: true },
+    thumbnail: { type: String,},
     category: { type: String, required: true },
     level: {
       type: String,

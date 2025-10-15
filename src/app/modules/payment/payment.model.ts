@@ -8,6 +8,7 @@ import { payment_methods_const, payment_status_const } from "./payment.constance
 const PaymentSchema = new Schema<TPayment>(
   {
     courseId: { type: Schema.Types.ObjectId, ref: "Courses", required: true },
+    batch_Id: { type: Schema.Types.ObjectId, ref: "Batches", required: true },
     paymentStatus: {
       type: String,
       enum: payment_status_const,

@@ -4,6 +4,6 @@ export type TEnrollment = {
   userId: Types.ObjectId;
   courseId: Types.ObjectId;
   batch_id?: Types.ObjectId;
-  purchaseDate: string;
+  purchaseDate: Date;
   status: "active" | "completed";
 };  

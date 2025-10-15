@@ -1,9 +1,17 @@
 import { catch_async } from "../../utils/catch_async";
 import { course_services } from "./course.service";
 
-
 const create_course = catch_async(async (req, res, next) => {
-  const result = await course_services.create_course_into_db(req.body)
+  const file_name = req?.file?.filename;
+  const file_original_name = req?.file?.originalname;
+
+  const base_url = `${req.protocol}://${req.get("host")}`;
+  const result = await course_services.create_course_into_db(
+    req.body,
+    file_name,
+    file_original_name,
+    base_url
+  );
   res.status(200).send({
     success: true,
     message: "course created successfully",
@@ -12,10 +20,12 @@ const create_course = catch_async(async (req, res, next) => {
 });
 
 const update_course = catch_async(async (req, res, next) => {
-
   const course_id = req?.params?.course_id;
 
-  const result = await course_services.update_course_into_db(course_id as string,req.body)
+  const result = await course_services.update_course_into_db(
+    course_id as string,
+    req.body
+  );
   res.status(200).send({
     success: true,
     message: "course updated successfully",
@@ -24,10 +34,11 @@ const update_course = catch_async(async (req, res, next) => {
 });
 
 const get_single_course = catch_async(async (req, res, next) => {
+  const course_id = req?.params?.course_id;
 
-  const course_id = req?.params?.course_id
-
-  const result = await course_services.get_single_course_from_db(course_id as string);
+  const result = await course_services.get_single_course_from_db(
+    course_id as string
+  );
   res.status(200).send({
     success: true,
     message: "course retrieved successfully",
@@ -43,8 +54,10 @@ const get_all_course = catch_async(async (req, res, next) => {
   });
 });
 const delete_course = catch_async(async (req, res, next) => {
-  const course_id = req?.params?.course_id
-  const result = await course_services.delete_course_from_db(course_id as string);
+  const course_id = req?.params?.course_id;
+  const result = await course_services.delete_course_from_db(
+    course_id as string
+  );
   res.status(200).send({
     success: true,
     message: "courses deleted successfully",
@@ -57,5 +70,5 @@ export const course_controllers = {
   update_course,
   get_single_course,
   get_all_course,
-  delete_course
+  delete_course,
 };
