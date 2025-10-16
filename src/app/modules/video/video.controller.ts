@@ -67,7 +67,6 @@ const delete_video = catch_async(async (req, res, next) => {
 
   const result = await video_services.delete_video_from_db(
     video_id as string,
-    req.body
   );
   res.status(200).send({
     success: true,
