@@ -25,5 +25,5 @@ router.patch(
   validate_request(update_certificate_zod_validation_schema),
   certificate_controllers.update_certificate
 );
-  
+
 export const certificate_router = router;
