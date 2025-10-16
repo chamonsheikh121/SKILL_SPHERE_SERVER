@@ -19,13 +19,12 @@ const create_user_into_db = async (
     throw new Error("User creation failed");
   }
 
-
-    const image_url = image_url_generator(
-       result,
-       file_name,
-       file_full_name,
-       base_url
-     );
+  const image_url = image_url_generator(
+    result,
+    file_name,
+    file_full_name,
+    base_url
+  );
 
   if (image_url) {
     const user_with_profile_image = await UserModel.findOneAndUpdate(
@@ -47,7 +46,14 @@ const create_user_into_db = async (
   return result;
 };
 
-const update_user_into_db = async (id: string, payload: Partial<TUser>) => {
+const update_user_into_db = async (
+  id: string,
+  payload: Partial<TUser>,
+  base_url: string,
+  file_name: string | undefined,
+  file_full_name: string | undefined
+) => {
+  // step 1: modifying none primitive to primitive as update payload
   const { name, ...rest_primitive_data } = payload;
   const new_data: Record<string, unknown> = { ...rest_primitive_data };
 
@@ -57,10 +63,24 @@ const update_user_into_db = async (id: string, payload: Partial<TUser>) => {
       new_data[`name.${keys}`] = value;
     }
   }
-  console.log(new_data);
 
-  const result = await UserModel.findByIdAndUpdate(id, new_data, { new: true });
-  return result;
+  // step 2: profile image create or if exist update
+  const result = await UserModel.findById(id);
+  if (!result) {
+    throw new Error("User not found");
+  }
+  const profile_image = image_url_generator(
+    result,
+    file_name,
+    file_full_name,
+    base_url
+  );
+
+  new_data.profile_image = profile_image;
+  const update_user_to_db = await UserModel.findByIdAndUpdate(id, new_data, {
+    new: true,
+  });
+  return update_user_to_db;
 };
 
 const get_single_user_from_db = async (id: string) => {

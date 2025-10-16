@@ -19,6 +19,8 @@ router.post(
 );
 router.patch(
   "/update-user/:user_id",
+  upload_image.single("image_file"),
+  catch_async(request_data_parser),
   validate_request(update_user_zod_validation_schema),
   user_controllers.update_user
 );

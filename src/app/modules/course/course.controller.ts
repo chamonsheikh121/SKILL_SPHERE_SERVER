@@ -21,10 +21,16 @@ const create_course = catch_async(async (req, res, next) => {
 
 const update_course = catch_async(async (req, res, next) => {
   const course_id = req?.params?.course_id;
+ const file_name = req?.file?.filename;
+  const file_full_name = req?.file?.originalname;
 
+  const base_url = `${req.protocol}://${req.get("host")}`;
   const result = await course_services.update_course_into_db(
     course_id as string,
-    req.body
+    req.body,
+    file_name, 
+    file_full_name, 
+    base_url
   );
   res.status(200).send({
     success: true,

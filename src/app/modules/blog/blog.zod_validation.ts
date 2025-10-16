@@ -12,5 +12,16 @@ export const blog_zod_validation_schema = z.object({
     is_deleted: z.boolean().default(false),
   })
 });
+export const update_blog_zod_validation_schema = z.object({
+  body: z.object({
+    title: z.string().min(1, "Title is required").optional(),
+    content: z.string().min(1, "Content is required").optional(),
+    userId: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    views: z.number().optional(),
+    is_published: z.boolean().default(false).optional(),
+    is_deleted: z.boolean().default(false).optional(),
+  })
+});
 
 

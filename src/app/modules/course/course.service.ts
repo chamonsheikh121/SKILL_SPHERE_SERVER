@@ -15,13 +15,12 @@ const create_course_into_db = async (
     throw new Error("Failed to create Course");
   }
 
- 
-   const thumbnail = image_url_generator(
-     result,
-     file_name,
-     file_full_name,
-     base_url
-   );
+  const thumbnail = image_url_generator(
+    result,
+    file_name,
+    file_full_name,
+    base_url
+  );
 
   if (thumbnail) {
     const result_with_image = await CourseModel.findByIdAndUpdate(
@@ -39,15 +38,35 @@ const create_course_into_db = async (
   return result;
 };
 
-const update_course_into_db = async (id: string, payload: Partial<TCourse>) => {
+const update_course_into_db = async (
+  id: string,
+  payload: Partial<TCourse>,
+  file_name: string | undefined,
+  file_full_name: string | undefined,
+  base_url: string
+) => {
   const course = await CourseModel.findById(id);
   if (!course) {
     throw new Error("no course found");
   }
+
+  const thumbnail = image_url_generator(
+    course,
+    file_name,
+    file_full_name,
+    base_url
+  );
+
+  if (thumbnail) {
+    payload.thumbnail = thumbnail;
+    const result = await CourseModel.findByIdAndUpdate(id, payload, {
+      new: true,
+    });
+    return result;
+  }
   const result = await CourseModel.findByIdAndUpdate(id, payload, {
     new: true,
   });
-  console.log(result);
   return result;
 };
 
@@ -75,7 +94,6 @@ const delete_course_from_db = async (id: string) => {
   }
 
   const is_video_file_exist = path.join(process.cwd(), "course_videos", id);
-  console.log(is_video_file_exist);
 
   // 3️⃣ Delete folder if exists
   if (fs.existsSync(is_video_file_exist)) {
