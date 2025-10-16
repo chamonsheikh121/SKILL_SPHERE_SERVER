@@ -38,10 +38,24 @@ const get_all_lesson = catch_async(async (req, res, next) => {
     data: result,
   });
 });
+const delete_lesson = catch_async(async (req, res, next) => {
+
+
+  const {lesson_id} = req?.params
+
+  const result = await lesson_services.delete_lesson_from_db(lesson_id as string);
+  res.status(200).send({
+    success: true,
+    message: "lessons deleted successfully",
+    data: result,
+  });
+});
+
 
 export const lesson_controllers = {
   create_lesson,
   update_lesson,
   get_single_lesson,
-  get_all_lesson
+  get_all_lesson,
+  delete_lesson
 };

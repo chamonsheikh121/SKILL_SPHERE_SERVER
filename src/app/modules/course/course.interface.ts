@@ -8,7 +8,7 @@ export type TCourse = {
   level: "beginner" | "intermediate" | "advanced";
   price: number;
   discountPrice?: number;
-  instructor_or_admin_Id: Types.ObjectId; 
+  created_by: Types.ObjectId; 
   tags?: string[];
   // videos?: Types.ObjectId[]; 
   // lessons?: Types.ObjectId[]; 

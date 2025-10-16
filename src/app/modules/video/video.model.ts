@@ -30,7 +30,6 @@ const videoSchema = new Schema<TVideo>(
     },
     url: {
       type: String,
-      required: true,
     },
     duration: {
       type: Number,

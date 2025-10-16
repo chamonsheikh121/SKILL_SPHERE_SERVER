@@ -1,11 +1,16 @@
-import { NextFunction, Request, Response } from "express"
+import { NextFunction, Request, Response } from "express";
 
+export const request_data_parser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  console.log("from data parser and before paring");
 
-export const request_data_parser = async(req:Request, res:Response,next:NextFunction)=>{
-    
-    if(req?.body?.data){
-       req.body= JSON.parse(req?.body?.data)
-    
-    }
-    next()
-}
+  if (req?.body?.data) {
+    req.body = JSON.parse(req?.body?.data);
+
+    console.log("from data parser and after paring");
+  }
+  next();
+};

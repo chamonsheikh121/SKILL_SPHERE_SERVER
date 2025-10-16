@@ -15,7 +15,7 @@ const courseSchema = new Schema<TCourse>(
     },
     price: { type: Number, required: true },
     discountPrice: { type: Number },
-    instructor_or_admin_Id: {
+    created_by: {
       type: Schema.Types.ObjectId,
       ref: "Users",
       required: true,

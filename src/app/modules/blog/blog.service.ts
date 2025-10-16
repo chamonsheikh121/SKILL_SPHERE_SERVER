@@ -1,9 +1,8 @@
 import path from "path";
 import { TBlog } from "./blog.interface";
 import Blog_Model from "./blog.model";
-import fs from "fs";
 import { image_url_generator } from "../../utils/image_url_generator";
-import { idnEmail } from "zod/v4/core/regexes.cjs";
+
 
 const create_blog_into_db = async (
   payload: TBlog,

@@ -5,7 +5,7 @@ export type TVideo = {
   lessonId: Types.ObjectId;
   lessonTitle: string;
   title: string;
-  url: string; 
+  url?: string; 
   duration: number; 
   qualityOptions: string[]; 
   courseTitle: string;        

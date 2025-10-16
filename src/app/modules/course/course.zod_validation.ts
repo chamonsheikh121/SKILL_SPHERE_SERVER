@@ -26,7 +26,7 @@ export const course_zod_validation_schema = z.object({
       .positive("Discount price must be positive")
       .optional(),
 
-    instructor_or_admin_Id: z
+    created_by: z
       .string()
       .min(1, "Instructor or Admin ID cannot be empty"),
     tags: z.array(z.string()).optional(),
@@ -68,7 +68,7 @@ export const update_course_zod_validation_schema = z.object({
       .positive("Discount price must be positive")
       .optional(),
 
-    instructor_or_admin_Id: z
+    created_by: z
       .string()
       .min(1, "Instructor or Admin ID cannot be empty")
       .optional(),

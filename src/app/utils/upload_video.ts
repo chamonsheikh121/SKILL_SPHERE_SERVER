@@ -4,15 +4,20 @@ import fs from "fs";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const data = JSON.parse(req.body.data); // metadata from frontend
-    const courseId = data?.courseId;
+    const data = JSON.parse(req?.body?.data)
+    const courseId = data?.courseId as string;
+    const lessonId = data?.lessonId as string;
+
+    if(!(courseId && lessonId)){
+throw new Error("Please provide an course Id and LessonId")
+    }
 
     // step 1 :  main folder making if not exists
     const baseFolder = path.join(process.cwd(), "course_videos");
     if (!fs.existsSync(baseFolder)) fs.mkdirSync(baseFolder);
 
     // step 2: specific course videos folder by course id
-    const uploadPath = path.join(baseFolder, courseId);
+    const uploadPath = path.join(baseFolder, courseId, lessonId);
     if (!fs.existsSync(uploadPath)) {
       fs.mkdirSync(uploadPath, { recursive: true });
     }

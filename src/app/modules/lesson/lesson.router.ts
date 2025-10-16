@@ -10,5 +10,6 @@ router.post('/create-lesson',validate_request(lesson_zod_validation_schema), les
 router.patch('/update-lesson/:lesson_id',validate_request(update_lesson_zod_validation_schema), lesson_controllers.update_lesson)
 router.get('/:lesson_id', lesson_controllers.get_single_lesson)
 router.get('/', lesson_controllers.get_all_lesson)
+router.delete('/delete-lesson/:lesson_id', lesson_controllers.delete_lesson)
 
 export const lesson_router = router;
