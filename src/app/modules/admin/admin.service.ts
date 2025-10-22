@@ -6,9 +6,7 @@ import { generate_admin_reg_numb } from "../user/generate_registration_number";
 
 
 const create_admin_to_db = async(payload:TAdmin)=>{
-    
 const session = await mongoose.startSession()
-
 try {
     session.startTransaction()
 
@@ -18,11 +16,7 @@ try {
     await UserModel.findByIdAndUpdate(payload.user_id,{
         role:'admin'
     },{session});
-
-
-
     const result = await AdminModel.create([payload],{session})
-
    await session.commitTransaction()
    await session.endSession()
     return result

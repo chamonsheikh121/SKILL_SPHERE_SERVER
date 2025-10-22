@@ -8,17 +8,17 @@ import transporter from "./email";
 
 export const send_payment_confirmation_email = async (
   enrollment_data: TEnrollment,
-  payment_data:TPayment
+  payment_data: TPayment
 ) => {
   const course = await CourseModel.findById(enrollment_data?.courseId);
   const user = await UserModel.findById(enrollment_data?.userId);
   const batch = await Batch_Model.findById(enrollment_data?.batch_id);
-  const payment = await Payment_model.findById(payment_data?._id )
+  const payment = await Payment_model.findById(payment_data?._id);
 
-console.log("course", course);
-console.log("user", user);
-console.log("batch", batch);
-console.log("payment", payment);
+  console.log("course", course);
+  console.log("user", user);
+  console.log("batch", batch);
+  console.log("payment", payment);
 
   try {
     const info = await transporter.sendMail({
@@ -34,7 +34,7 @@ Your payment has been successfully processed.
 
 Thanks,
 Skill Sphere Team`,
-html: `
+      html: `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,37 +54,47 @@ html: `
 
       <!-- Body -->
       <div style="padding:30px 40px;">
-        <h2 style="color:#0d6efd; margin-top:0;">Hello ${user?.name?.first_name} ${user?.name?.mid_name} ${user?.name?.last_name},</h2>
+        <h2 style="color:#0d6efd; margin-top:0;">Hello ${
+          user?.name?.first_name
+        } ${user?.name?.mid_name} ${user?.name?.last_name},</h2>
         <p style="color:#333; font-size:16px;">
-          🎉 Congratulations! Your payment has been successfully processed for the course 
+           Congratulations! Your payment has been successfully processed for the course 
           <strong>${course?.title}</strong>.
         </p>
 
         <div style="margin:25px 0;">
           <table style="width:100%; border-collapse:collapse; font-size:15px;">
             <tr>
-              <td style="padding:10px 0; color:#555;">💳 <strong>Transaction ID:</strong></td>
-              <td style="padding:10px 0; color:#333;">${payment?.transactionId}</td>
+              <td style="padding:10px 0; color:#555;"> <strong>Transaction ID:</strong></td>
+              <td style="padding:10px 0; color:#333;">${
+                payment?.transactionId
+              }</td>
             </tr>
             <tr>
-              <td style="padding:10px 0; color:#555;">📅 <strong>Purchase Date:</strong></td>
-              <td style="padding:10px 0; color:#333;">${enrollment_data?.purchaseDate}</td>
+              <td style="padding:10px 0; color:#555;"><strong>Purchase Date:</strong></td>
+              <td style="padding:10px 0; color:#333;">${
+                enrollment_data?.purchaseDate
+              }</td>
             </tr>
             <tr>
-              <td style="padding:10px 0; color:#555;">💰 <strong>Amount Paid:</strong></td>
+              <td style="padding:10px 0; color:#555;"> <strong>Amount Paid:</strong></td>
               <td style="padding:10px 0; color:#333;">$${course?.price}</td>
             </tr>
             <tr>
-              <td style="padding:10px 0; color:#555;">🏷️ <strong>Payment Method:</strong></td>
-              <td style="padding:10px 0; color:#333;">${payment?.paymentMethod}</td>
+              <td style="padding:10px 0; color:#555;"> <strong>Payment Method:</strong></td>
+              <td style="padding:10px 0; color:#333;">${
+                payment?.paymentMethod
+              }</td>
             </tr>
             <tr>
-              <td style="padding:10px 0; color:#555;">📚 <strong>Batch:</strong></td>
+              <td style="padding:10px 0; color:#555;"> <strong>Batch:</strong></td>
               <td style="padding:10px 0; color:#333;">${batch?.title}</td>
             </tr>
             <tr>
-              <td style="padding:10px 0; color:#555;">⏰ <strong>Batch Duration:</strong></td>
-              <td style="padding:10px 0; color:#333;">${batch?.start_date} – ${batch?.end_date}</td>
+              <td style="padding:10px 0; color:#555;"> <strong>Batch Duration:</strong></td>
+              <td style="padding:10px 0; color:#333;">${batch?.start_date} – ${
+        batch?.end_date
+      }</td>
             </tr>
           </table>
         </div>
@@ -98,7 +108,7 @@ html: `
 
         <p style="color:#777; font-size:13px; text-align:center;">
           Thanks for choosing <strong>Skill Sphere</strong>!<br/>
-          Empowering your learning journey 🌟
+          Empowering your learning journey 
         </p>
       </div>
 
@@ -112,8 +122,7 @@ html: `
   </div>
 </body>
 </html>
-`
-
+`,
     });
 
     console.log("📧 Verification email sent:", info.messageId);

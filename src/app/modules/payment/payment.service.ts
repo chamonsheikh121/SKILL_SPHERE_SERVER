@@ -15,6 +15,7 @@ import { Progress_Model } from "../progress/progress.model";
 import Enrollment_Model from "../enrollments/enrollment.model";
 import Batch_Model from "../batch/batch.model";
 import { send_payment_confirmation_email } from "../../utils/send_payment_confirmation_email";
+import { Lesson_Model } from "../lesson/lesson.model";
 
 const initialize_sslcommerz_into_db = async (payload: TPayment) => {
   const is_live = false; //true for live, false for sandbox
@@ -77,7 +78,6 @@ const initialize_sslcommerz_into_db = async (payload: TPayment) => {
     gatewway_page_url: api_response.GatewayPageURL,
   };
 };
-
 const success_sslcommerz_into_db = async (tran_id: string | undefined) => {
   const session = await mongoose.startSession();
   try {
@@ -150,11 +150,15 @@ const success_sslcommerz_into_db = async (tran_id: string | undefined) => {
       enrollment = enrollment_result[0];
     }
 
+    const course_id = enrollment?.courseId
+    const total_lessons = await Lesson_Model.findOne({course_id})
     const progress_data: Partial<TProgress> = {};
 
     progress_data.userId = enrollment?.userId as Types.ObjectId;
     progress_data.courseId = enrollment?.courseId as Types.ObjectId;
     progress_data.enrollmentId = enrollment?._id as Types.ObjectId;
+    progress_data.totalLessons = total_lessons?.length;
+
 
     await Progress_Model.create([progress_data], { session });
 

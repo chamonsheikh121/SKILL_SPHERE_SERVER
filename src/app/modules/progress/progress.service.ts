@@ -23,7 +23,6 @@ const get_single_progress_from_db = async (id: string) => {
   if (!result) {
     throw new Error("No progress found");
   }
-
   return result;
 };
 const get_all_progress_from_db = async () => {
@@ -31,7 +30,6 @@ const get_all_progress_from_db = async () => {
   if (!result.length) {
     throw new Error("No progress found");
   }
-
   return result;
 };
 
