@@ -51,7 +51,8 @@ const get_single_blog = catch_async(async (req, res, next) => {
   });
 });
 const get_all_blog = catch_async(async (req, res, next) => {
-  const result = await blog_services.get_all_blog_from_db();
+
+  const result = await blog_services.get_all_blog_from_db(req.query);
   res.status(200).send({
     success: true,
     message: "Blogs retrieved successfully",

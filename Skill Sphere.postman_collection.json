@@ -1,0 +1,1139 @@
+{
+	"info": {
+		"_postman_id": "727e0b24-e2e7-4456-aea5-224ccfdc2956",
+		"name": "Skill Sphere",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34587017"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"sheikhchamon8@gmail.com\",\r\n    \"password\":\"password12\"\r\n}   ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/auth/login",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forget password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"sheikhchamon7@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/auth/forget-password",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"auth",
+								"forget-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "barer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoZWlraGNoYW1vbjdAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJyZWdpc3RyYXRpb25fbnVtYmVyIjoiIiwiaWF0IjoxNzYwNTA3NzkwLCJleHAiOjE3NjA1MDgzOTB9.E2c20T9cezVU-cNGN6ghh2-5P48p7Rc0G38POOp2xMc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"sheikhchamon7@gmail.com\",\r\n    \"new_password\":\"chamonali1ss\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/auth/reset-password",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"auth",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "barer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoYW1vbmFsaTEyQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwicmVnaXN0cmF0aW9uX251bWJlciI6IiIsImlhdCI6MTc2MDUxMzAwOCwiZXhwIjoxNzYwNTE2NjA4fQ.DTDNBRvH5QwiykAi0ARknvQyiWRRa3tLy9_5qPr4Av0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"old_password\":\"chamonali1sss\",\r\n    \"new_password\":\"chamonali1sss\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/auth/change-password",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"auth",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{\n    \"name\": {\n        \"first_name\": \"MD\",\n        \"mid_name\": \"sabbir\",\n        \"last_name\": \"hossen\"\n    },\n    \"email\": \"sheikhchamon11@gmail.com\",\n    \"password\": \"password12\",\n    \"phone_number\": \"+1-555-234-9876\"\n}",
+									"type": "text"
+								},
+								{
+									"key": "image_file",
+									"type": "file",
+									"src": "/C:/Users/Chamon Ali/Downloads/e2529006-37e6-4e0d-9772-dcc610d99a3d.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/users/create-user",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"users",
+								"create-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{\n    \"name\": {\n        \"last_name\": \"ALI\"\n  \n    },\n    \"phone_number\": \"+1-555-234-9876\"\n}",
+									"type": "text"
+								},
+								{
+									"key": "image_file",
+									"type": "file",
+									"src": "/C:/Users/Chamon Ali/Downloads/WhatsApp Image 2025-02-11 at 12.59.45_b5ffe4d0.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/users/update-user/68f09541f0f81e624b9d8e20",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"users",
+								"update-user",
+								"68f09541f0f81e624b9d8e20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoZWlraGNoYW1vbjhAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJyZWdpc3RyYXRpb25fbnVtYmVyIjoiIiwiaWF0IjoxNzYxNDY4NTM2LCJleHAiOjE3NjE0NzIxMzZ9.arBrfl6PzBZQPDy5ElREknwKzNhSO_iak51ALpsciUY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/users/68f09541f0f81e624b9d8e20",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"users",
+								"68f09541f0f81e624b9d8e20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/users",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoZWlraGNoYW1vbjhAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJyZWdpc3RyYXRpb25fbnVtYmVyIjoiIiwiaWF0IjoxNzYxNDY2NDk0LCJleHAiOjE3NjE0NzAwOTR9.C5Cqg5S8VgwpN9VPjpRjmP5uU5pHg6cowM1BYZotfvE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/users/me",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "create admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\":\"68ebf50936ce091eb1796c67\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/admins/create-admin",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"admins",
+								"create-admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all admins",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/admins",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"admins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/admins/68ec08d858e008f04cc62dac",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"admins",
+								"68ec08d858e008f04cc62dac"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "students",
+			"item": [
+				{
+					"name": "get all students",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\":\"68ebf50936ce091eb1796c67\"\r\n}"
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/students/",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"students",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/students/68ec0506b5493156a9f02753",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"students",
+								"68ec0506b5493156a9f02753"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "courses",
+			"item": [
+				{
+					"name": "create course",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{\n  \"title\": \"Chamon ali course\",\n  \"description\": \"Learn Python programming and apply it to data science, machine learning, and AI projects. Covers NumPy, Pandas, Matplotlib, Scikit-learn, and real-world datasets.\",\n  \"category\": \"Data Science\",\n  \"level\": \"intermediate\",\n  \"price\": 200,\n  \"discountPrice\": 150,\n  \"created_by\": \"670fdedb7a4b3a1e5f93dc01\",\n  \"tags\": [\"python\", \"data-science\", \"machine-learning\", \"pandas\", \"numpy\"]\n}\n",
+									"type": "text"
+								},
+								{
+									"key": "image_file",
+									"type": "file",
+									"src": "/C:/Users/Chamon Ali/Downloads/download.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/courses/create-course",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"courses",
+								"create-course"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update course",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{ \"title\": \"Advanced Node.js and Express API Developments\"}",
+									"type": "text"
+								},
+								{
+									"key": "image_file",
+									"type": "file",
+									"src": "/C:/Users/Chamon Ali/Downloads/download.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/courses/update-course/68f099a5adf0a3d2df086b52",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"courses",
+								"update-course",
+								"68f099a5adf0a3d2df086b52"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/courses",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/courses/68f099a5adf0a3d2df086b52",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"courses",
+								"68f099a5adf0a3d2df086b52"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete course",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/courses/delete-course/68f0ea26410eb7a05a406a10",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"courses",
+								"delete-course",
+								"68f0ea26410eb7a05a406a10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "batches",
+			"item": [
+				{
+					"name": "create batch",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"course_id\": \"68efd605e92e11665797203f\",\r\n  \"instructor_admin_id\": \"68e829073f0c5fc84138af45\",\r\n  \"title\": \"Full Stack Web Development - Batch 1\",\r\n  \"start_date\": \"2025-11-01\",\r\n  \"end_date\": \"2026-02-01\",\r\n  \"enrollment_start_date\": \"2025-10-15\",\r\n  \"enrollment_end_date\": \"2025-10-30\",\r\n  \"max_participants\": 50,\r\n  \"status\": \"upcoming\",\r\n  \"enrollmentStatus\": \"not_started\",\r\n  \"language\": \"English\",\r\n  \"tags\": [\"web development\", \"mern\", \"backend\", \"frontend\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/batches/create-batch",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"batches",
+								"create-batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update batch",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"course_id\": \"68e829073f0c5fc84138af45\",\r\n  \"instructor_admin_id\": \"68e829073f0c5fc84138af45\",\r\n  \"title\": \"Fulls Stack Web Development - Batch 1\",\r\n  \"start_date\": \"2025-11-02\",\r\n  \"end_date\": \"2026-02-02\",\r\n  \"enrollment_start_date\": \"2025-10-12\",\r\n  \"enrollment_end_date\": \"2025-10-32\",\r\n  \"max_participants\": 52,\r\n  \"status\": \"upcoming\",\r\n  \"enrollmentStatus\": \"not_started\",\r\n  \"language\": \"English2\",\r\n  \"tags\": [\"web development\", \"mern\", \"backend\", \"frontend2\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/batches/update-batch/68ecf330a86d5c1d68a7eb57",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"batches",
+								"update-batch",
+								"68ecf330a86d5c1d68a7eb57"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all batches",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/batches",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single batch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/batches/68ecf1a995e71e9e3e79f5c5",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"batches",
+								"68ecf1a995e71e9e3e79f5c5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Enrollment",
+			"item": [
+				{
+					"name": "create enrollment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"68ee55a03658e1ae5e360800\",\r\n    \"courseId\": \"68efb342f772ec60e89e0b8e\",\r\n    \"batch_id\": \"6529b92bfc13ae0a4c00003c\",\r\n    \"purchaseDate\": \"2025-10-09T10:00:00.000Z\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/enrollments/create-enrollment",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"enrollments",
+								"create-enrollment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all enrollment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"68e829073f0c5fc84138af45\",\r\n  \"courseId\": \"6529b92bfc13ae0a4c00001b\",\r\n  \"offered_course\": \"6529b92bfc13ae0a4c00003c\",\r\n  \"purchaseDate\": \"2025-10-09T10:00:00.000Z\",\r\n  \"progressPercent\": 25,\r\n  \"completedLessons\": [\r\n    \"6529b92bfc13ae0a4c00005d\",\r\n    \"6529b92bfc13ae0a4c00005e\"\r\n  ],\r\n  \"certificateId\": \"6529b92bfc13ae0a4c00007f\",\r\n  \"status\": \"active\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/enrollments",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"enrollments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single enrollment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/enrollments/68ed0254e77d5a6c26963475",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"enrollments",
+								"68ed0254e77d5a6c26963475"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "video",
+			"item": [
+				{
+					"name": "create video",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{\n  \"courseId\": \"68fbbc1610d97c4602297b4f\",\n  \"courseTitle\": \"Web ddd fdsds Development\",\n\"lessonTitle\": \"Web ddd fdsds Development lesson\",\n  \"lessonId\": \"68fbbc4610d97c4602297b57\",\n  \"title\": \"Introduction to React Hooks113\",\n  \"duration\": 420,\n  \"qualityOptions\": [\"480p\", \"720p\", \"1080p\"]\n}",
+									"type": "text"
+								},
+								{
+									"key": "video_file",
+									"type": "file",
+									"src": "/E:/SONGS/Amake Amar Moto Thakte Dao (Lyrics) -Anupom Roy -Full Song.mp4"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/videos/create-video",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"videos",
+								"create-video"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all video",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/videos",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"videos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single video",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/videos/68ee1904697b74fc381a8226",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"videos",
+								"68ee1904697b74fc381a8226"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update video",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"chamon ali video title\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/videos/update-video/68ee189dd36f4c7424baad64",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"videos",
+								"update-video",
+								"68ee189dd36f4c7424baad64"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete video",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/videos/delete-video/68fbbd2310d97c4602297b5f",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"videos",
+								"delete-video",
+								"68fbbd2310d97c4602297b5f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reviews",
+			"item": [
+				{
+					"name": "create review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n  \"courseId\": \"670a1c4a5f4c1b92b34e2f84\",\r\n  \"userId\": \"670a1d0a5f4c1b92b34e2f88\",\r\n  \"rating\": 5,\r\n  \"comment\": \"The course was excellent! The instructor explained every topic clearly, and the examples were very practical. Totally worth it.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/reviews/create-review",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"reviews",
+								"create-review"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "blogs",
+			"item": [
+				{
+					"name": "create blog",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{\n  \"title\": \"Building Scalable Node.js APIs with Express\",\n  \"content\": \"In this article, we cover best practices for building scalable and secure Node.js APIs using Express. Topics include routing, middleware, authentication, error handling, and performance optimization.\",\n  \"userId\": \"670a1d0a5f4c1b92b34e2f88\",\n  \"tags\": [\"Node.js\", \"Express\", \"Backend\", \"API\", \"JavaScript\"],\n  \"is_published\": true,\n  \"is_deleted\": false\n}\n",
+									"type": "text"
+								},
+								{
+									"key": "image_file",
+									"type": "file",
+									"src": "/E:/Linkedin poster/IMAGES/New folder/25854.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/blogs/create-blog",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"blogs",
+								"create-blog"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update blog",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "data",
+								"value": "{\n  \"title\": \"Building Scalable Node.js APIs with Express\",\n  \"content\": \"In this article, we cover best practices for building scalable and secure Node.js APIs using Express. Topics include routing, middleware, authentication, error handling, and performance optimization.\",\n  \"userId\": \"670a1d0a5f4c1b92b34e2f88\",\n  \"tags\": [\"Node.js\", \"Express\", \"Backend\", \"API\", \"JavaScript\"],\n  \"is_published\": true,\n  \"is_deleted\": false\n}\n",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "image_file",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{\n  \"title\": \"Building Scalable Node.js APIs with Express1\",\n  \"content\": \"In this article, we cover best practices for building scalable and secure Node.js APIs using Express. Topics include routing, middleware, authentication, error handling, and performance optimization.1\",\n  \"userId\": \"670a1d0a5f4c1b92b34e2f88\",\n  \"tags\": [\"Node.js\", \"chamon\", \"Backend\", \"API\", \"JavaScript\"]\n}\n",
+									"type": "text"
+								},
+								{
+									"key": "image_file",
+									"type": "file",
+									"src": "/C:/Users/Chamon Ali/Downloads/screencapture-mytradesperson-co-uk-2025-08-24-23_22_05.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/blogs/update-blog/68f088c67b178d37e5629f1a",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"blogs",
+								"update-blog",
+								"68f088c67b178d37e5629f1a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all blogs",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "certificates",
+			"item": [
+				{
+					"name": "create certificate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "{\n  \"userId\": \"670a1d0a5f4c1b92b34e2f88\",\n  \"courseId\": \"670a1c4a5f4c1b92b34e2f84\"\n}\n",
+									"type": "text"
+								},
+								{
+									"key": "image_file",
+									"type": "file",
+									"src": "/C:/Users/Chamon Ali/Downloads/Black and Purple Gradient Modern Motivation LinkedIn Post.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/certificates/create-certificate",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"certificates",
+								"create-certificate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update certificate",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "payments",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"courseId\": \"68eb666cd7b9c3c2956edad8\",\r\n  \"userId\": \"68e829073f0c5fc84138af45\",\r\n  \"paymentMethod\": \"ssl_commerz\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/payments/create-payment",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"payments",
+								"create-payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/payments/ssl_payment/cancel/9d21da9c-a4fe-4bdb-b204-74f71bd7de36",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"payments",
+								"ssl_payment",
+								"cancel",
+								"9d21da9c-a4fe-4bdb-b204-74f71bd7de36"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "progress",
+			"item": [
+				{
+					"name": "get all progress",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Lessons",
+			"item": [
+				{
+					"name": "create lesson",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseId\": \"671a8fd7c3f9b2d84f3a1234\",\r\n  \"title\": \"Introduction to JavaScrisdsptsdsd\",\r\n  \"description\": \"In this lesson, you’ll learn the basics of JavaScript, including variables, data types, and operators.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/lessons/create-lesson",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"lessons",
+								"create-lesson"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update lesson",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\":\"chamon ali chamon ali chamon ali chamon ali chamon ali chamon ali chamon ali chamon ali chamon ali chamon ali chamon ali chamon ali chamon ali chamon ali \"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SKILL_SPHERE_API}}/lessons/update-lesson/68ee5ea802b89914f3db1dbc",
+							"host": [
+								"{{SKILL_SPHERE_API}}"
+							],
+							"path": [
+								"lessons",
+								"update-lesson",
+								"68ee5ea802b89914f3db1dbc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all lessons",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get single lesson",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "delete lesson",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test server",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

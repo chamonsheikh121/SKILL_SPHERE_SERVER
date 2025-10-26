@@ -2,6 +2,7 @@ import path from "path";
 import { TBlog } from "./blog.interface";
 import Blog_Model from "./blog.model";
 import { image_url_generator } from "../../utils/image_url_generator";
+import Query_Builder from "../../builder/query_builder";
 
 
 const create_blog_into_db = async (
@@ -81,8 +82,10 @@ const get_single_blog_from_db = async (id: string) => {
 
   return result;
 };
-const get_all_blog_from_db = async () => {
-  const result = await Blog_Model.find();
+const get_all_blog_from_db = async (query:Record<string, unknown>) => {
+  const blog_query = new Query_Builder(Blog_Model.find().populate("userId"), query).filter().sort().pagination().search(['email']); 
+
+  const result = await blog_query.model_query
   if (!result.length) {
     throw new Error("No blog found");
   }

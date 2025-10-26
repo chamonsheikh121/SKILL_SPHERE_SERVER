@@ -13,7 +13,6 @@ export const create_enrollment_into_db = async (payload: TEnrollment) => {
   if(!user){
     throw new Error("No user found. Please create an account first")
   }
-
 };
 
 // const complete_enrollment_into_db = async(id:string,payload:Partial<TCourse>)=>{

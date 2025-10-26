@@ -7,6 +7,7 @@ import { TUser } from "./user.interface";
 import UserModel from "./user.model";
 import fs from "fs";
 import { image_url_generator } from "../../utils/image_url_generator";
+import Query_Builder from "../../builder/query_builder";
 
 const create_user_into_db = async (
   payload: TUser,
@@ -91,18 +92,31 @@ const get_single_user_from_db = async (id: string) => {
 
   return result;
 };
-const get_all_user_from_db = async () => {
-  const result = await UserModel.find();
+const get_all_user_from_db = async (query:Record<string,any>) => {
+  const user_query = new Query_Builder(UserModel.find(), query).filter().sort().pagination().search(['email']);
+
+  const result = await user_query.model_query
+
   if (!result.length) {
     throw new Error("No user found");
   }
-
   return result;
 };
+const get_me_from_db = async (email: string) => {
+  
+  console.log(
+    email
+  );
+  const result = await UserModel.findOne({email});
+  return result
+
+};
+
 
 export const user_services = {
   create_user_into_db,
   update_user_into_db,
   get_single_user_from_db,
   get_all_user_from_db,
+  get_me_from_db
 };

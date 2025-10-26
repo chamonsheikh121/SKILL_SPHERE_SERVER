@@ -58,9 +58,23 @@ const get_all_user = catch_async(async (req, res, next) => {
   });
 });
 
+const get_me = catch_async(async (req, res, next) => {
+  console.log('my self chamon ali'); 
+  const {email} = req?.user
+
+  const result = await user_services.get_me_from_db(email as string);
+  res.status(200).send({
+    success: true,
+    message: "user retrieved successfully",
+    data: result,
+  });
+});
+
+
 export const user_controllers = {
   create_user,
   update_user,
   get_single_user,
   get_all_user,
+  get_me
 };

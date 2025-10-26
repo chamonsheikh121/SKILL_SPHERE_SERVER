@@ -131,6 +131,7 @@ const change_password_into_db = async (
     },
     {
       password: bcrypt_new_password,
+       last_pass_changed_at: new Date(),
     },
     {
       new: true,

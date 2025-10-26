@@ -8,6 +8,8 @@ import {
 import { upload_image } from "../../utils/upload_image";
 import { catch_async } from "../../utils/catch_async";
 import { request_data_parser } from "../../middle_wires/data_parser";
+import { authorizer } from "../../utils/authorization";
+import { user_roles } from "./user.constance";
 const router = express.Router();
 
 router.post(
@@ -24,7 +26,8 @@ router.patch(
   validate_request(update_user_zod_validation_schema),
   user_controllers.update_user
 );
-router.get("/:user_id", user_controllers.get_single_user);
+router.get("/me",authorizer(user_roles.admin, user_roles.student, user_roles.user), user_controllers.get_me);
+router.get("/:user_id",authorizer(user_roles.admin), user_controllers.get_single_user);
 router.get("/", user_controllers.get_all_user);
 
 export const user_router = router;

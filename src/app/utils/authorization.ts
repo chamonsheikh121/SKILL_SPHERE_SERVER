@@ -4,9 +4,11 @@ import { verify } from "crypto";
 import config from "../config";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import UserModel from "../modules/user/user.model";
-import { TUser } from "../modules/user/user.interface";
+import { TUser, TUser_Role } from "../modules/user/user.interface";
+import { AppError } from "../errors/AppError";
+import  HttpStatus  from 'http-status';
 
-export const authorizer = () => {
+export const authorizer = (...required_roles:TUser_Role[]) => {
   return catch_async(
     async (req: Request, res: Response, next: NextFunction) => {
       const token = req.headers.authorization?.split(" ")[1] as string;
@@ -19,15 +21,17 @@ export const authorizer = () => {
         config.ACCESS_TOKEN_SECRET as string
       ) as JwtPayload;
 
+      const { email, role, registration_number, iat, exp } = decode;
       if (!decode) {
         throw new Error("You are not Authorized user");
       }
-    //   console.log(decode);
+      //   console.log(decode);
 
       const user = await UserModel.is_user_exist_by_email(
         decode.email as string
       );
-     
+
+      console.log(user);
       if (!user) {
         throw new Error("No user found with this email");
       }
@@ -41,10 +45,30 @@ export const authorizer = () => {
         throw new Error("You are not verified . Please verify your email");
       }
 
-      req.user = user as TUser
+      // const is_invalid_token =
+      //   user?.last_pass_changed_at &&
+      //   UserModel.last_login_and_pass_update_comparision(
+      //     user.last_pass_changed_at,
+      //     iat as number
+      //   );
+      //   console.log(is_invalid_token);
 
-      next()
+      // if (is_invalid_token) {
+      //   throw new AppError(
+      //     "you are not authorized  !!! ",
+      //     HttpStatus.UNAUTHORIZED
+      //   );
+      // }
+      if (required_roles && !required_roles.includes(role)) {
+        throw new AppError(
+          "you are not authorizefffffffffffffffffffffffffffd !!! ",HttpStatus.UNAUTHORIZED
+        );
+      }
 
+      console.log(user);
+      req.user = user as TUser;
+
+      next();
     }
   );
 };
