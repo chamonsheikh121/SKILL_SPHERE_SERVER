@@ -11,10 +11,14 @@ export type TBatch = {
   title: string;
   start_date: string;
   end_date: string;
-  enrollment_start_date: string;
-  enrollment_end_date: string;
+  enrolled_students:number;
   max_participants: number;
   status: "upcoming" | "ongoing" | "completed" | "cancelled";
+
+
+  
+  enrollment_start_date: string;
+  enrollment_end_date: string;
   enrollmentStatus: "not_started" | "open" | "all_booked" | "closed";
   lessons: TLessons[];
   // instructor_admin_id: Types.ObjectId;

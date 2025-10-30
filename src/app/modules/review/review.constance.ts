@@ -1,0 +1,1 @@
+export const review_status_cons = ['approved','pending']

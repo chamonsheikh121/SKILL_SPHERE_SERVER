@@ -4,7 +4,6 @@ import { course_router } from "../modules/course/course.router";
 import { batch_router } from "../modules/batch/batch.router";
 import { enrollment_router } from "../modules/enrollments/enrollment.router";
 import { video_router } from "../modules/video/video.router";
-import { review_router } from "../modules/review/review.router";
 import { blog_router } from "../modules/blog/blog.router";
 import { certificate_router } from "../modules/certificate/certificate.router";
 import { payment_router } from "../modules/payment/payment.router";
@@ -13,6 +12,7 @@ import { student_router } from "../modules/student/student.router";
 import { progress_router } from "../modules/progress/progress.router";
 import { lesson_router } from "../modules/lesson/lesson.router";
 import { auth_router } from "../modules/auth/auth.router";
+import { review_router } from './../modules/review/review.router';
 
 const router = express.Router();
 

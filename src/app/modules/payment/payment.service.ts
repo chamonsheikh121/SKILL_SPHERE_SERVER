@@ -25,13 +25,14 @@ const initialize_sslcommerz_into_db = async (payload: TPayment) => {
   const user = await UserModel.findById(payload?.userId);
   const batch = await Batch_Model.findById(payload?.batch_Id);
 
-  
+
+
 
   if (!(course && batch && user)) {
     throw new Error(`course and batch and user are not matched`);
   }
 
-  payload.transactionId = transactionId
+  payload.transactionId = transactionId;
   await Payment_model.create(payload);
 
   const customer_name = `${user?.name?.first_name} ${user?.name?.mid_name} ${user?.name?.last_name}`;
@@ -46,7 +47,7 @@ const initialize_sslcommerz_into_db = async (payload: TPayment) => {
     ipn_url: "http://localhost:3030/ipn",
     shipping_method: "Courier",
     product_name: course?.title,
-    product_category: course?.category,
+    product_category: course?.title,
     product_profile: course?.thumbnail,
     cus_name: customer_name,
     cus_email: user?.email,
@@ -73,7 +74,7 @@ const initialize_sslcommerz_into_db = async (payload: TPayment) => {
     is_live
   );
   const api_response = await sslcz.init(data);
-
+console.log(api_response);
   return {
     gatewway_page_url: api_response.GatewayPageURL,
   };
@@ -150,8 +151,8 @@ const success_sslcommerz_into_db = async (tran_id: string | undefined) => {
       enrollment = enrollment_result[0];
     }
 
-    const course_id = enrollment?.courseId
-    const total_lessons = await Lesson_Model.findOne({course_id})
+    const course_id = enrollment?.courseId;
+    const total_lessons = await Lesson_Model.find({ course_id });
     const progress_data: Partial<TProgress> = {};
 
     progress_data.userId = enrollment?.userId as Types.ObjectId;
@@ -159,14 +160,15 @@ const success_sslcommerz_into_db = async (tran_id: string | undefined) => {
     progress_data.enrollmentId = enrollment?._id as Types.ObjectId;
     progress_data.totalLessons = total_lessons?.length;
 
-
     await Progress_Model.create([progress_data], { session });
+    await Batch_Model.findByIdAndUpdate(payment_details.batch_Id, {
+      $inc: { enrolled_students: 1 },
+    });
 
-
-if(!enrollment){
-  throw new Error("Enrollment failed")
-}
-await send_payment_confirmation_email(enrollment, payment_details)
+    if (!enrollment) {
+      throw new Error("Enrollment failed");
+    }
+    await send_payment_confirmation_email(enrollment, payment_details);
 
     // ✅ Commit the transaction
     await session.commitTransaction();

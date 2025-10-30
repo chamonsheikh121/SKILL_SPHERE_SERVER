@@ -1,7 +1,7 @@
 // models/Review.ts
 import mongoose, { Schema, Document, Model, model } from "mongoose";
 import { TReview } from "./review.interface";
-
+import { review_status_cons } from "./review.constance";
 
 const ReviewSchema = new Schema<TReview>(
   {
@@ -26,8 +26,17 @@ const ReviewSchema = new Schema<TReview>(
     comment: {
       type: String,
       trim: true,
-      required:true,
-      maxLength:2000,
+      required: true,
+      maxLength: 2000,
+    },
+    status: {
+      type: String,
+      enum: review_status_cons,
+      default: "pending",
+    },
+    review_date: {
+      type: Date,
+      default: Date.now,
     },
   },
   {
@@ -35,7 +44,5 @@ const ReviewSchema = new Schema<TReview>(
   }
 );
 
-
-
-const Review_Model = model<TReview>('Reviews', ReviewSchema)
+const Review_Model = model<TReview>("Reviews", ReviewSchema);
 export default Review_Model;
