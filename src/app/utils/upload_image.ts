@@ -4,7 +4,6 @@ import fs from "fs";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-   
     const baseFolder = path.join(process.cwd(), "image_files");
     if (!fs.existsSync(baseFolder)) fs.mkdirSync(baseFolder);
 

@@ -1,8 +1,13 @@
 import { Types } from "mongoose";
 
+type TLessons = {
+  lesson_id: Types.ObjectId;
+  video_url: string;
+  video_id?: Types.ObjectId;
+};
+
 export type TBatch = {
-  course_id: Types.ObjectId;            
-  instructor_admin_id: Types.ObjectId;        
+  course_id: Types.ObjectId;
   title: string;
   start_date: string;
   end_date: string;
@@ -11,6 +16,8 @@ export type TBatch = {
   max_participants: number;
   status: "upcoming" | "ongoing" | "completed" | "cancelled";
   enrollmentStatus: "not_started" | "open" | "all_booked" | "closed";
-  language: string;
-  tags?: string[];    
+  lessons: TLessons[];
+  // instructor_admin_id: Types.ObjectId;
+  // language: string;
+  // tags?: string[];
 };

@@ -1,89 +1,89 @@
 import mongoose from "mongoose";
-import { TVideo } from "./video.interface";
-import { Video_Model } from "./video.model";
-import fs from "fs";
-import path from "path";
+import Batch_Model from "../batch/batch.model";
 import { CourseModel } from "../course/course.model";
 import { Lesson_Model } from "../lesson/lesson.model";
+import { TVideo } from "./video.interface";
+import { Video_Model } from "./video.model";
+import path from "path";
+import fs from "fs";
 
 const create_video_into_db = async (
   base_url: string,
   fileName: string,
   file_original_name: string,
-  payload: TVideo
+  payload: TVideo & { batchId: string } // 👈 added batchId
 ) => {
-  // const video = await Video_Model.findOne({ title: payload?.title });
-  // if (video) {
-  //   throw new Error(`${video?.title} Video already exist`);
-  // }
-  const is_course_exist = await CourseModel.findById(payload?.courseId);
-  if (!is_course_exist) {
-    throw new Error("Course not found");
-  }
-  const is_lesson_exist = await Lesson_Model.findById(payload?.lessonId);
-  if (!is_lesson_exist) {
-    throw new Error("Lesson not found");
-  }
+  const { courseId, lessonId, batchId } = payload;
+
+  const is_course_exist = await CourseModel.findById(courseId);
+  if (!is_course_exist) throw new Error("Course not found");
+
+  const is_lesson_exist = await Lesson_Model.findById(lessonId);
+  if (!is_lesson_exist) throw new Error("Lesson not found");
+
+  const is_batch_exist = await Batch_Model.findById(batchId);
+  if (!is_batch_exist) throw new Error("Batch not found");
 
   const session = await mongoose.startSession();
 
   try {
     session.startTransaction();
 
-    // step 1: initialize video info info into db
-    const result = await Video_Model.create([payload], { session });
+    // Step 1️⃣: Save video info to DB
+    const [newVideo] = await Video_Model.create([payload], { session });
+    if (!newVideo) throw new Error("Failed to create video entry in DB");
 
-    if (!result.length) {
-      throw new Error("video not initialized  into db");
-    }
-
-    // step 2: rename uploaded video file name with video_id from db
-    const course_folder_name = payload?.courseId.toString();
-    const lesson_folder_name = payload?.lessonId.toString();
-    const updated_file_name = result[0]?._id.toString() as string;
-
-    const uploaded_folder = path.join(
+    // Step 2️⃣: Prepare proper folder and file path
+    const course_folder = path.join(
       process.cwd(),
       "course_videos",
-      course_folder_name,
-      lesson_folder_name,
-      fileName
+      courseId.toString()
     );
+    const lesson_folder = path.join(course_folder, lessonId.toString());
 
-    const rename_folder = path.join(
-      process.cwd(),
-      "course_videos",
-      course_folder_name,
-      lesson_folder_name,
-      updated_file_name
-    );
+    // Ensure directory exists
+    fs.mkdirSync(lesson_folder, { recursive: true });
+
+    const videoId = newVideo._id.toString();
     const ext = path.extname(file_original_name);
-    fs.renameSync(uploaded_folder, rename_folder + ext);
+    const finalFileName = `batch_${batchId}__lesson_${lessonId}__video_${videoId}${ext}`;
 
-    // step 3: create a brand new url and update video url into db
-    const video_url = `${base_url}/course_videos/${course_folder_name}/${lesson_folder_name}/${
-      updated_file_name + ext
-    }}`;
+    // Step 3️⃣: Rename file
+    const uploadedPath = path.join(lesson_folder, fileName);
+    const finalPath = path.join(lesson_folder, finalFileName);
 
-    const update_url_to_db = await Video_Model.findByIdAndUpdate(
-      result[0]?._id,
+    fs.renameSync(uploadedPath, finalPath);
+
+    // Step 4️⃣: Create full URL
+    const video_url = `${base_url}/course_videos/${courseId}/${lessonId}/${finalFileName}`;
+
+    // Step 5️⃣: Update Video DB record with URL
+    const updatedVideo = await Video_Model.findByIdAndUpdate(
+      newVideo._id,
+      { url: video_url },
+      { new: true, session }
+    );
+
+    // Step 6️⃣: Push video URL into Batch lessons array
+    await Batch_Model.updateOne(
+      { _id: batchId, "lessons.lesson_id": lessonId },
       {
-        url: video_url,
+        $set: {
+          "lessons.$.video_id": videoId, // The uploaded video's ObjectId
+          "lessons.$.video_url": video_url, // The uploaded video's URL
+        },
       },
-      {
-        new: true,
-        session,
-      }
+      { session }
     );
 
     await session.commitTransaction();
-    await session.endSession();
-
-    return update_url_to_db;
+    session.endSession();
+    return updatedVideo;
   } catch (error) {
     await session.abortTransaction();
-    await session.endSession();
-    console.log(error);
+    session.endSession();
+    console.error("Error creating video:", error);
+    throw error;
   }
 };
 

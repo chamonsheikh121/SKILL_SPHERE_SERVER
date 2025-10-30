@@ -2,14 +2,25 @@ import { catch_async } from "../../utils/catch_async";
 import { course_services } from "./course.service";
 
 const create_course = catch_async(async (req, res, next) => {
-  const file_name = req?.file?.filename;
-  const file_original_name = req?.file?.originalname;
+  type UploadFiles = {
+    [fieldname: string]: Express.Multer.File[];
+  };
+  const files = req?.files as UploadFiles;
+  const image_file = files?.image_file?.[0]?.filename;
+  const image_file_original_name = files?.image_file?.[0]?.originalname;
+  const mentor_file = files?.mentor_file?.[0]?.filename;
+  const mentor_file_original_name = files?.mentor_file?.[0]?.originalname;
+
+  console.log(image_file, image_file_original_name);
+  console.log(mentor_file, mentor_file_original_name);
 
   const base_url = `${req.protocol}://${req.get("host")}`;
   const result = await course_services.create_course_into_db(
     req.body,
-    file_name,
-    file_original_name,
+    image_file,
+    image_file_original_name,
+    mentor_file,
+    mentor_file_original_name,
     base_url
   );
   res.status(200).send({
@@ -21,15 +32,15 @@ const create_course = catch_async(async (req, res, next) => {
 
 const update_course = catch_async(async (req, res, next) => {
   const course_id = req?.params?.course_id;
- const file_name = req?.file?.filename;
+  const file_name = req?.file?.filename;
   const file_full_name = req?.file?.originalname;
 
   const base_url = `${req.protocol}://${req.get("host")}`;
   const result = await course_services.update_course_into_db(
     course_id as string,
     req.body,
-    file_name, 
-    file_full_name, 
+    file_name,
+    file_full_name,
     base_url
   );
   res.status(200).send({

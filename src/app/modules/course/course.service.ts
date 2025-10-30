@@ -8,34 +8,46 @@ import { Video_Model } from "../video/video.model";
 
 const create_course_into_db = async (
   payload: TCourse,
-  file_name: string | undefined,
-  file_full_name: string | undefined,
+  image_file: string | undefined,
+  image_file_original_name: string | undefined,
+  mentor_file: string | undefined,
+  mentor_file_original_name: string | undefined,
   base_url: string
 ) => {
-
-   const course = await CourseModel.findOne({ title: payload?.title });
-    if (course) {
-      throw new Error(`${course?.title} Course already exist`);
-    }
-
+  const course = await CourseModel.findOne({ title: payload?.title });
+  if (course) {
+    throw new Error(`${course?.title} Course already exist`);
+  }
 
   const result = await CourseModel.create(payload);
   if (!result) {
     throw new Error("Failed to create Course");
   }
 
+
+const multiple_image= true
   const thumbnail = image_url_generator(
+    "course_thumbnail",
     result,
-    file_name,
-    file_full_name,
+    image_file,
+    image_file_original_name,
     base_url
   );
+  const mentor = image_url_generator(
+    "mentor_image",
+    result,
+    mentor_file,
+    mentor_file_original_name,
+    base_url,
+    multiple_image
+  );
 
-  if (thumbnail) {
+  if (thumbnail && mentor) {
     const result_with_image = await CourseModel.findByIdAndUpdate(
       result?._id,
       {
         thumbnail,
+        mentor_photo: mentor,
       },
       {
         new: true,
@@ -60,6 +72,7 @@ const update_course_into_db = async (
   }
 
   const thumbnail = image_url_generator(
+    "course_thumbnail",
     course,
     file_name,
     file_full_name,
@@ -102,11 +115,11 @@ const delete_course_from_db = async (id: string) => {
     throw new Error("no course found to delete");
   }
 
- // 3️⃣ Delete folder and everything inside the file if exists
+  // 3️⃣ Delete folder and everything inside the file if exists
   const video_folder = path.join(process.cwd(), "course_videos");
 
-  if(!fs.existsSync(video_folder)){
-    fs.mkdirSync(video_folder)
+  if (!fs.existsSync(video_folder)) {
+    fs.mkdirSync(video_folder);
   }
 
   const course_folders = fs.readdirSync(video_folder);
@@ -118,15 +131,27 @@ const delete_course_from_db = async (id: string) => {
       else console.log("Course folder deleted successfully");
     });
   }
- // 3️⃣ Delete delete thumbnail if it exists
+  // 3️⃣ Delete delete thumbnail if it exists
   const image_folder = path.join(process.cwd(), "image_files");
   const image_files = fs.readdirSync(image_folder);
-  const is_image_exist = image_files.find((file) => file.startsWith(id));
-  if (is_image_exist) {
-    const existing_image_path = path.join(image_folder, is_image_exist);
-    fs.rm(existing_image_path, {force: true }, (err) => {
-      if (err) console.error("Failed to delete course thumbnail:", err);
-      else console.log("Course folder deleted successfully");
+  const is_image_exist = image_files.filter((file) => {
+    const file_id = file.split("-")[1] as string;
+    return file_id.startsWith(id);
+  });
+  if (is_image_exist.length) {
+    is_image_exist.forEach((file) => {
+      const existing_image_path = path.join(image_folder, file);
+      fs.rm(existing_image_path, { force: true }, (err) => {
+        if (err)
+          console.error(
+            "Failed to delete course  thumbnail and mentor image",
+            err
+          );
+        else
+          console.log(
+            " course  thumbnail and mentor image deleted successfully"
+          );
+      });
     });
   }
 

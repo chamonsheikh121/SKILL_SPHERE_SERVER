@@ -2,8 +2,9 @@ import path from "path";
 import { CourseModel } from "../course/course.model";
 import { TLesson } from "./lesson.interface";
 import { Lesson_Model } from "./lesson.model";
-import  fs  from 'fs';
+import fs from "fs";
 import { Video_Model } from "../video/video.model";
+import Batch_Model from "../batch/batch.model";
 
 const create_lesson_into_db = async (payload: TLesson) => {
   const is_course_exist = await CourseModel.findById(payload?.courseId);
@@ -11,15 +12,31 @@ const create_lesson_into_db = async (payload: TLesson) => {
     throw new Error("Course not found");
   }
 
-  const is_lesson_exist = await Lesson_Model.findOne({title:payload?.title})
+  const is_lesson_exist = await Lesson_Model.findOne({ title: payload?.title });
+  if (is_lesson_exist) {
+    throw new Error(`${is_lesson_exist?.title} lesson already exists`);
+  }
 
-if(is_lesson_exist){
-  throw new Error(`${is_lesson_exist?.title} , Lesson already exist`)
-}
+  // 1️⃣ Create the new lesson
+  const newLesson = await Lesson_Model.create(payload);
 
+  // 2️⃣ Find all batches related to this course
+  const relatedBatches = await Batch_Model.find({ courseId: payload.courseId });
 
-  const result = await Lesson_Model.create(payload);
-  return result;
+  console.log(relatedBatches);
+
+  // 3️⃣ Add this new lesson to all batches (with empty video)
+  await Promise.all(
+    relatedBatches.map(async (batch) => {
+      batch.lessons.push({
+        lesson_id: newLesson._id,
+        video_url: "", // fresh video slot for the new lesson
+      });
+      await batch.save();
+    })
+  );
+
+  return newLesson;
 };
 
 const update_lesson_into_db = async (id: string, payload: Partial<TLesson>) => {
@@ -52,9 +69,12 @@ const delete_lesson_from_db = async (id: string) => {
     throw new Error("No lesson found to delete");
   }
 
- // 3️⃣ Delete folder and everything inside the file if exists
- const course_videos= path.join(process.cwd(), "course_videos");
-  const course_folder = path.join(course_videos, is_lesson_exist?.courseId.toString())
+  // 3️⃣ Delete folder and everything inside the file if exists
+  const course_videos = path.join(process.cwd(), "course_videos");
+  const course_folder = path.join(
+    course_videos,
+    is_lesson_exist?.courseId.toString()
+  );
   const lesson_folders = fs.readdirSync(course_folder);
   const is_lesson_folder_exist = lesson_folders.find((lesson) => lesson == id);
   if (is_lesson_folder_exist) {
@@ -64,7 +84,7 @@ const delete_lesson_from_db = async (id: string) => {
       else console.log("Lesson folder deleted successfully");
     });
   }
- 
+
   await Video_Model.deleteMany({ lessonId: id });
   const result = await Lesson_Model.findByIdAndDelete(id);
   return result;
@@ -75,5 +95,5 @@ export const lesson_services = {
   update_lesson_into_db,
   get_single_lesson_from_db,
   get_all_lesson_from_db,
-  delete_lesson_from_db
+  delete_lesson_from_db,
 };

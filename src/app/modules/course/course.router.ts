@@ -12,7 +12,13 @@ const router = express.Router();
 
 router.post(
   "/create-course",
-  upload_image.single("image_file"),
+  upload_image.fields([
+    {
+      name: "image_file",
+      maxCount: 1,
+    },
+    { name: "mentor_file", maxCount: 1 },
+  ]),
   catch_async(request_data_parser),
   validate_request(course_zod_validation_schema),
   course_controllers.create_course

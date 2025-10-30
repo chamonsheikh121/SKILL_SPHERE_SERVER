@@ -3,7 +3,12 @@ import { Types } from "mongoose";
 export type TCourse = {
   title: string;
   description: string;
+  Workshop_URL:string;
   thumbnail?: string;
+  mentor_name: string;
+  mentor_photo?: string;
+  mentor_rating?: number;
+  mentor_description:string;
   category: string; 
   level: "beginner" | "intermediate" | "advanced";
   price: number;

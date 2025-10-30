@@ -28,6 +28,7 @@ const create_certificate_into_db = async (
   }
 
   const certificateUrl = image_url_generator(
+    "certificate",
     result,
     file_name,
     file_full_name,
@@ -66,6 +67,7 @@ const update_certificate_into_db = async (
   }
 
   const certificateUrl = image_url_generator(
+    "certificate",
     certificate,
     file_name,
     file_full_name,

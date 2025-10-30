@@ -17,7 +17,7 @@ router.post(
   upload_image.single("image_file"),
   catch_async(request_data_parser),
   validate_request(blog_zod_validation_schema),
-  authorizer(user_roles.admin),
+  // authorizer(user_roles.admin),
   blog_controllers.create_blog
 );
 
@@ -26,7 +26,7 @@ router.patch(
   upload_image.single("image_file"),
   catch_async(request_data_parser),
   validate_request(update_blog_zod_validation_schema),
-  authorizer(user_roles.admin),
+  // authorizer(user_roles.admin),
   blog_controllers.update_blog
 );
 router.get(

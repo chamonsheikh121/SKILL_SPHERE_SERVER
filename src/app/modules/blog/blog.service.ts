@@ -17,6 +17,7 @@ const create_blog_into_db = async (
   }
 
   const thumbnail = image_url_generator(
+    "blog",
     result,
     file_name,
     file_full_name,
@@ -53,6 +54,7 @@ const update_blog_into_db = async (
   }
 
   const thumbnail = image_url_generator(
+    "blog",
     result,
     file_name,
     file_full_name,

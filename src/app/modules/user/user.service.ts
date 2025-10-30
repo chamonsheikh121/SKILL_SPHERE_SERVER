@@ -21,6 +21,7 @@ const create_user_into_db = async (
   }
 
   const image_url = image_url_generator(
+    "user",
     result,
     file_name,
     file_full_name,
@@ -71,6 +72,7 @@ const update_user_into_db = async (
     throw new Error("User not found");
   }
   const profile_image = image_url_generator(
+    "user",
     result,
     file_name,
     file_full_name,
