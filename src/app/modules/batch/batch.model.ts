@@ -27,7 +27,7 @@ const batch_Schema = new Schema<TBatch>(
     {
       lesson_id: { type: Schema.Types.ObjectId, ref: "Lessons", required: true },
       video_url: { type: String, default: "" }, // Batch-specific video
-      video_id: { type: Schema.Types.ObjectId, ref: "Videos", required: true },
+      video_id: { type: Schema.Types.ObjectId, ref: "Videos"},
     }
   ],
     // instructor_admin_id: { type: Schema.Types.ObjectId, ref: "Users", required: true },

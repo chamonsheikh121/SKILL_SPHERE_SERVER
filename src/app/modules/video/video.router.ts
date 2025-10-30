@@ -19,7 +19,6 @@ router.post(
 );
 router.patch(
   "/update-video/:video_id",
-  validate_request(video_update_zod_validation_schema),
   video_controllers.update_video
 );
 router.get("/:video_id", video_controllers.get_single_video);

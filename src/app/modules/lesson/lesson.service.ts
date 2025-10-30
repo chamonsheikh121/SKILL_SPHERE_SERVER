@@ -21,9 +21,7 @@ const create_lesson_into_db = async (payload: TLesson) => {
   const newLesson = await Lesson_Model.create(payload);
 
   // 2️⃣ Find all batches related to this course
-  const relatedBatches = await Batch_Model.find({ courseId: payload.courseId });
-
-  console.log(relatedBatches);
+  const relatedBatches = await Batch_Model.find({ course_id: payload.courseId });
 
   // 3️⃣ Add this new lesson to all batches (with empty video)
   await Promise.all(

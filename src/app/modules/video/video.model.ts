@@ -8,37 +8,28 @@ const videoSchema = new Schema<TVideo>(
       ref: "Courses",
       required: true,
     },
-     courseTitle: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-     lessonTitle: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+
     lessonId: {
       type: Schema.Types.ObjectId,
       ref: "Lesson",
       required: true,
     },
-    title: {
-      type: String,
+    batchId: {
+      type: Schema.Types.ObjectId,
+      ref: "Batches",
       required: true,
-      trim: true,
     },
     url: {
       type: String,
     },
-    duration: {
-      type: Number,
-      required: true,
-    },
-    qualityOptions: {
-      type: [String],
-      default: [],
-    },
+    // duration: {
+    //   type: Number,
+    //   required: true,
+    // },
+    // qualityOptions: {
+    //   type: [String],
+    //   default: [],
+    // },
   },
   { timestamps: true }
 );
