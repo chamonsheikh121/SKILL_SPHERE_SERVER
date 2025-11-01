@@ -17,10 +17,10 @@ export const image_url_generator = (
     if (!multiple_image) {
       const is_exist_image = images?.find((image) => {
         const file_id = image.split("-")[1] as string;
-        console.log(file_id);
+
         return file_id.startsWith(result?._id);
       });
-      console.log("is exist image", is_exist_image);
+      // console.log("is exist image", is_exist_image);
 
       // Delete old image if exists
       if (is_exist_image) {

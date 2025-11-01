@@ -13,6 +13,7 @@ import { progress_router } from "../modules/progress/progress.router";
 import { lesson_router } from "../modules/lesson/lesson.router";
 import { auth_router } from "../modules/auth/auth.router";
 import { review_router } from './../modules/review/review.router';
+import { dashboard_router } from "../modules/dashboard/dashboard.router";
 
 const router = express.Router();
 
@@ -72,6 +73,10 @@ const routes = [
   {
     path: "/lessons",
     route: lesson_router,
+  },
+  {
+    path: "/dashboard",
+    route: dashboard_router,
   },
 ];
 

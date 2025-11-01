@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
 import { TCourse } from "./course.interface";
-import { course_level_const } from "./course.constance";
 
 const courseSchema = new Schema<TCourse>(
   {
@@ -27,6 +26,16 @@ const courseSchema = new Schema<TCourse>(
     mentor_description: {
       type: String,
       required: true,
+    },
+    course_rating: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 5,
+    },
+    total_students: {
+      type: Number,
+      default: 0,
     },
     // category: { type: String, required: true },
     // level: {

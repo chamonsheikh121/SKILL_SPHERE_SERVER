@@ -25,9 +25,6 @@ const initialize_sslcommerz_into_db = async (payload: TPayment) => {
   const user = await UserModel.findById(payload?.userId);
   const batch = await Batch_Model.findById(payload?.batch_Id);
 
-
-
-
   if (!(course && batch && user)) {
     throw new Error(`course and batch and user are not matched`);
   }
@@ -74,7 +71,7 @@ const initialize_sslcommerz_into_db = async (payload: TPayment) => {
     is_live
   );
   const api_response = await sslcz.init(data);
-console.log(api_response);
+  console.log(api_response);
   return {
     gatewway_page_url: api_response.GatewayPageURL,
   };
@@ -161,9 +158,20 @@ const success_sslcommerz_into_db = async (tran_id: string | undefined) => {
     progress_data.totalLessons = total_lessons?.length;
 
     await Progress_Model.create([progress_data], { session });
-    await Batch_Model.findByIdAndUpdate(payment_details.batch_Id, {
-      $inc: { enrolled_students: 1 },
-    });
+    await Batch_Model.findByIdAndUpdate(
+      payment_details.batch_Id,
+      {
+        $inc: { enrolled_students: 1 },
+      },
+      { session }
+    );
+    await CourseModel.findByIdAndUpdate(
+      payment_details.courseId,
+      {
+        $inc: { total_students: 1 },
+      },
+      { session }
+    );
 
     if (!enrollment) {
       throw new Error("Enrollment failed");
